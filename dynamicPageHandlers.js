@@ -15,5 +15,11 @@ pageLib.handleGetMainPage = (req,res) =>{
   res.end();
 }
 
+pageLib.handleHomePage = (req,res) => {
+  let userHomePage = lib.displayHomePage(req.user);
+  res.write(userHomePage);
+  res.end();
+}
+
 
 module.exports = pageLib;

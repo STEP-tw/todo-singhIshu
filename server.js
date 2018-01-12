@@ -14,8 +14,17 @@ let logRequest = (req,res)=>{
   fs.appendFile('request.log',text,()=>{});
 };
 
+let loadUser = (req,res)=>{
+  let sessionid = req.cookies.sessionid;
+  let user = registered_users.find(u=>u.sessionid==sessionid);
+  if(sessionid && user){
+    req.user = user;
+  }
+};
+
 let app = WebApp.create();
 app.use(logRequest);
+app.use(loadUser);
 app.get('/',(req,res)=>{
   res.redirect('/index.html');
 });
@@ -35,9 +44,7 @@ app.post('/index.html',(req,res)=>{
   res.redirect('/home');
 })
 
-app.get('/home',(req,res)=>{
-  let user = registered_users.find(u=>u.username==req.body.username);
-})
+app.get('/home',lib.handleHomePage);
 
 const PORT = 5000;
 let server = http.createServer(app);

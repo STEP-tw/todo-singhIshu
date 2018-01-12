@@ -1,3 +1,4 @@
+const fs = require('fs');
 let lib = {};
 
 lib.getHomePageFormat = ()=>{
@@ -5,6 +6,7 @@ lib.getHomePageFormat = ()=>{
 }
 
 lib.displayHomePage = (userInfo) => {
+  console.log(userInfo);
   let homePageFormat = lib.getHomePageFormat();
   let homeWithUserName = homePageFormat.replace("UserName",userInfo.name);
   let homeWithToDoLists = homeWithUserName.replace("toDoMade","");
