@@ -1,0 +1,16 @@
+#Objective
+  Make a toDo app
+
+#Features
+  The user should loginin their account.
+  And Logout from their account.
+
+#Steps to Follow
+  First Make the Static Pages
+    => Main Page that will have the login form.
+    => Home Page of the user Have the user details and the button to make new toDo.
+    => The ToDo form page in which the user will type in his To-DO List.
+    => And the final ToDo Page that will have the toDO data of the user.
+
+  Then make the webapp.
+  And the server first For starting the server should work for the bad url.
