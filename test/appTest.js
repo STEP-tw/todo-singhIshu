@@ -55,7 +55,7 @@ describe('app',()=>{
   describe('POST /login',()=>{
     it('redirects to homepage for valid user',done=>{
       request(app,{method:'POST',url:'/index.html',body:'username=ishusi'},res=>{
-        th.should_be_redirected_to(res,'/homePage.html');
+        th.should_be_redirected_to(res,'/home');
         th.should_not_have_cookie(res,'message');
         done();
       })
