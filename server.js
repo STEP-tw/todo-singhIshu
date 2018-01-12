@@ -1,6 +1,7 @@
 let fs = require('fs');
 const http = require('http');
 const WebApp = require('./webapp');
+const lib = require('./dynamicPageHandlers.js');
 let registered_users = [{username:'bhanutv',name:'Bhanu Teja Verma'},{username:'ishusi',name:'Ishu Singh'}];
 let toS = o=>JSON.stringify(o,null,2);
 
@@ -13,22 +14,13 @@ let logRequest = (req,res)=>{
   fs.appendFile('request.log',text,()=>{});
 };
 
-const getLoginPage = (req,res)=>{
-  return fs.readFileSync('./public/index.html','utf8');
-}
-
 let app = WebApp.create();
 app.use(logRequest);
 app.get('/',(req,res)=>{
   res.redirect('/index.html');
 });
 
-app.get('/index.html',(req,res)=>{
-  let loginPage = getLoginPage();
-  res.setHeader('Content-type','text/html');
-  res.write(loginPage.replace("<h2></h2>",req.cookies.message || ""));
-  res.end();
-})
+app.get('/index.html',lib.handleGetMainPage);
 
 app.post('/index.html',(req,res)=>{
   let user = registered_users.find(u=>u.username==req.body.username);
@@ -40,9 +32,12 @@ app.post('/index.html',(req,res)=>{
   let sessionid = new Date().getTime();
   res.setHeader('Set-Cookie',`sessionid=${sessionid}`);
   user.sessionid = sessionid;
-  res.redirect('/homePage.html');
+  res.redirect('/home');
 })
 
+app.get('/home',(req,res)=>{
+  let user = registered_users.find(u=>u.username==req.body.username);
+})
 
 const PORT = 5000;
 let server = http.createServer(app);
