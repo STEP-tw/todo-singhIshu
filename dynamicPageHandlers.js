@@ -8,6 +8,7 @@ const getLoginPage = (req,res)=>{
 
 let pageLib = {};
 
+
 pageLib.handleGetMainPage = (req,res) =>{
   let loginPage = getLoginPage();
   res.setHeader('Content-type','text/html');
@@ -26,6 +27,11 @@ pageLib.handlePostNewTodo = (req,res) => {
   let toDoPage = lib.displayToDo(req.body);
   res.write(toDoPage);
   res.end();
+}
+
+pageLib.handleLogoutPage = function(req,res) {
+  delete req.user.sessionid;
+  res.redirect('index.html');
 }
 
 

@@ -14,11 +14,20 @@ lib.getToDoFormat = ()=> {
   return fs.readFileSync('./public/toDoFormat.html','utf8');
 }
 
+lib.getToDoMade = (toDoList)=> {
+  let toDos=toDoList.map(function(toDo){
+    return `<a href="${toDo.title}">${toDo.title}</a>`
+  })
+  return toDos.join("\n")
+}
+
 lib.displayHomePage = (userInfo) => {
-  console.log(userInfo);
+  let userDataBase = lib.getUserDataBase();
+  userInfo=userDataBase.find(u=>u.username==userInfo.username);
   let homePageFormat = lib.getHomePageFormat();
+  let userMadeToDos = lib.getToDoMade(userInfo.toDoList);
   let homeWithUserName = homePageFormat.replace("UserName",userInfo.name);
-  let homeWithToDoLists = homeWithUserName.replace("toDoMade","");
+  let homeWithToDoLists = homeWithUserName.replace("toDoMade",userMadeToDos);
   return homeWithToDoLists;
 }
 
@@ -42,7 +51,7 @@ lib.storeTheUserTODOs = (userInfo,userTodo) =>{
   else {
     currentUser.toDoList.push(userTodo);
   }
-  fs.writeFileSync("./userDataBase.json",JSON.stringify(userDatas));
+  fs.writeFileSync("./userDataBase.json",JSON.stringify(userDatas,null,2));
 }
 
 

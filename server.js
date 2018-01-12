@@ -46,6 +46,7 @@ app.post('/index.html',(req,res)=>{
 
 app.get('/home',lib.handleHomePage);
 app.post('/toDoForm.html',lib.handlePostNewTodo);
+app.get('/logout',lib.handleLogoutPage);
 
 const PORT = 5000;
 let server = http.createServer(app);
