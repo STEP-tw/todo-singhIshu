@@ -24,7 +24,7 @@ const readFileContents = function(response,fileName) {
   fileName = `./public${fileName}`;
   fs.readFile(fileName,(err,data)=>{
     if (err) {
-      response.statusCode
+      response.statusCode = 404;
       response.write("File Not Found"+fileName);
       response.end();
       return;
