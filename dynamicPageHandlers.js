@@ -21,5 +21,12 @@ pageLib.handleHomePage = (req,res) => {
   res.end();
 }
 
+pageLib.handlePostNewTodo = (req,res) => {
+  lib.storeTheUserTODOs(req.user,req.body);
+  let toDoPage = lib.displayToDo(req.body);
+  res.write(toDoPage);
+  res.end();
+}
+
 
 module.exports = pageLib;

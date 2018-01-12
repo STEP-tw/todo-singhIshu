@@ -1,6 +1,6 @@
 {
   "name": "toDo app",
-  "version": "3.0.0",
+  "version": "0.0.1",
   "description": "App that will help users to build their own toDos",
   "main": "src/index.js",
   "dependencies": {
