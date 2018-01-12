@@ -52,23 +52,23 @@ describe('app',()=>{
     })
   })
 
-  // describe('POST /login',()=>{
-  //   it('redirects to guestBook for valid user',done=>{
-  //     request(app,{method:'POST',url:'/login',body:'username=arvind'},res=>{
-  //       th.should_be_redirected_to(res,'/guestBook');
-  //       th.should_not_have_cookie(res,'message');
-  //       done();
-  //     })
-  //   })
-  //   it('redirects to login.html with message for invalid user',done=>{
-  //     request(app,{method:'POST',url:'/login',body:'username=badUser'},res=>{
-  //       th.should_be_redirected_to(res,'/login.html');
-  //       th.should_have_expiring_cookie(res,'message','login failed');
-  //       done();
-  //     })
-  //   })
-  // })
-  //
+  describe('POST /login',()=>{
+    it('redirects to homepage for valid user',done=>{
+      request(app,{method:'POST',url:'/index.html',body:'username=ishusi'},res=>{
+        th.should_be_redirected_to(res,'/homePage.html');
+        th.should_not_have_cookie(res,'message');
+        done();
+      })
+    })
+    it('redirects to login.html with message for invalid user',done=>{
+      request(app,{method:'POST',url:'/index.html',body:'username=badUser'},res=>{
+        th.should_be_redirected_to(res,'/index.html');
+        th.should_have_expiring_cookie(res,'message','login failed');
+        done();
+      })
+    })
+  })
+
   // describe.skip('POST /submitForm',()=>{
   //   it('serves the javascript source',done=>{
   //     request(app,{method:'POST',url:'/submitForm',body:'name=Foo&comment=Faa'},res=>{
