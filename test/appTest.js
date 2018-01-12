@@ -68,13 +68,4 @@ describe('app',()=>{
       })
     })
   })
-
-  // describe.skip('POST /submitForm',()=>{
-  //   it('serves the javascript source',done=>{
-  //     request(app,{method:'POST',url:'/submitForm',body:'name=Foo&comment=Faa'},res=>{
-  //       th.should_be_redirected_to(res,'/guestBook');
-  //       done();
-  //     })
-  //   })
-  // })
 })
