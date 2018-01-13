@@ -8,7 +8,6 @@ const getLoginPage = (req,res)=>{
 
 let pageLib = {};
 
-
 pageLib.handleGetMainPage = (req,res) =>{
   let loginPage = getLoginPage();
   res.setHeader('Content-type','text/html');

@@ -1,46 +1,26 @@
 [
   {
-    "username": "ishusi",
-    "name": "Ishu Singh",
-    "sessionid": 1515757113766,
-    "toDoList": [
-      {
-        "title": "dskn",
-        "description": "sfkn",
-        "item": "nkdas"
-      },
-      {
-        "title": "flower",
-        "description": "dknsam",
-        "item": "kdnsa"
-      },
-      {
-        "title": "sfkdn",
-        "description": "fksn",
-        "item": "kfnsad"
-      },
-      {
-        "title": "sfkdn",
-        "description": "fksn",
-        "item": "kfnsad"
-      },
-      {
-        "title": "sfdm",
-        "description": "kdsam",
-        "item": "wdlm"
-      }
-    ]
+    "title": "ishu",
+    "description": "dfksnm",
+    "item": "fdksm",
+    "username": "ishusi"
   },
   {
-    "username": "bhanutv",
-    "name": "Bhanu Teja Verma",
-    "sessionid": 1515757138134,
-    "toDoList": [
-      {
-        "title": "ksdn",
-        "description": "sfkdn",
-        "item": "fwnkads"
-      }
-    ]
+    "title": "sdkm",
+    "description": "dskcn",
+    "item": "sknc",
+    "username": "ishusi"
+  },
+  {
+    "title": "sdm",
+    "description": "sknm",
+    "item": "wddknasm",
+    "username": "ishusi"
+  },
+  {
+    "title": "DML",
+    "description": "SMCL",
+    "item": "SKM",
+    "username": "ishusi"
   }
 ]

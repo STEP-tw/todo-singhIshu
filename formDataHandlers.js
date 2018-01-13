@@ -1,7 +1,7 @@
 const fs = require('fs');
 let lib = {};
 
-lib.getUserDataBase = () => {
+lib.getToDoDataBase = () => {
   let userInfoList = fs.readFileSync('./userDataBase.json','utf8');
   return JSON.parse(userInfoList);
 }
@@ -14,6 +14,44 @@ lib.getToDoFormat = ()=> {
   return fs.readFileSync('./public/toDoFormat.html','utf8');
 }
 
+lib.isSameTitleAndUser = (toDo,title,username) => {
+  return toDo.title == title && toDo.username == username;
+}
+
+lib.isATitleOfSameUser = (toDoList,title,username) => {
+  return toDoList.some(function(toDo) {
+    return lib.isSameTitleAndUser(toDo,title,username);
+  })
+}
+
+lib.getPreviousToDo = (title,username) => {
+  let toDoLists = lib.getToDoDataBase();
+  for (var index = 0; index < toDoLists.length; index++) {
+    // console.log(title,username);
+    if (lib.isSameTitleAndUser(toDoLists[index],title,username)) {
+      // console.log("same title");
+      return lib.displayToDo(toDoLists[index]);
+    }
+    return;
+  }
+}
+
+lib.displayPreviousToDo = (title,userName) => {
+  let toDoList = lib.getToDoDataBase();
+  // console.log(lib.isATitleOfSameUser(toDoList,title,userName));
+  if (lib.isATitleOfSameUser(toDoList,title,userName)) {
+    return lib.getPreviousToDo(title,userName);
+  }
+  return;
+}
+
+
+lib.getTheUserToDos = (userName,userDataBase) => {
+  return userDataBase.filter(function(toDo) {
+    return toDo.username = userName;
+  })
+}
+
 lib.getToDoMade = (toDoList)=> {
   let toDos=toDoList.map(function(toDo){
     return `<a href="${toDo.title}">${toDo.title}</a>`
@@ -22,10 +60,14 @@ lib.getToDoMade = (toDoList)=> {
 }
 
 lib.displayHomePage = (userInfo) => {
-  let userDataBase = lib.getUserDataBase();
-  userInfo=userDataBase.find(u=>u.username==userInfo.username);
   let homePageFormat = lib.getHomePageFormat();
-  let userMadeToDos = lib.getToDoMade(userInfo.toDoList);
+  let toDoDataBase = lib.getToDoDataBase();
+  let userToDos = lib.getTheUserToDos(userInfo.username,toDoDataBase)
+  if(userToDos.length == 0){
+    let homeWithUserName = homePageFormat.replace("UserName",userInfo.name);
+    return homeWithUserName;
+  }
+  let userMadeToDos = lib.getToDoMade(userToDos);
   let homeWithUserName = homePageFormat.replace("UserName",userInfo.name);
   let homeWithToDoLists = homeWithUserName.replace("toDoMade",userMadeToDos);
   return homeWithToDoLists;
@@ -40,17 +82,10 @@ lib.displayToDo = (userInfo)=>{
 }
 
 lib.storeTheUserTODOs = (userInfo,userTodo) =>{
-  let userDatas = lib.getUserDataBase();
-  let currentUser = userDatas.find(u=>u.username==userInfo.username);
-  if (!currentUser) {
-    let newUser = userInfo;
-    newUser.toDoList = [];
-    newUser.toDoList.push(userTodo);
-    userDatas.push(newUser);
-  }
-  else {
-    currentUser.toDoList.push(userTodo);
-  }
+  let userDatas = lib.getToDoDataBase();
+  let newTodo = userTodo;
+  newTodo.username = userInfo.username;
+  userDatas.push(newTodo);
   fs.writeFileSync("./userDataBase.json",JSON.stringify(userDatas,null,2));
 }
 

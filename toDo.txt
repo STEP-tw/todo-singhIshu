@@ -14,3 +14,10 @@
 
   Then make the webapp.
   And the server first For starting the server should work for the bad url.
+
+
+#Steps to show the previous toDOs
+
+Take the list of the database and then filter the objects that are having the same username
+take the userList and map out the titles and you will get the list of all the titles.
+when the user will go t

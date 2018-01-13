@@ -68,4 +68,41 @@ describe('app',()=>{
       })
     })
   })
+
+  describe('GET /toDoForm.html',()=>{
+    it('serves the user with login form',done=>{
+      request(app,{method:'GET',url:'/toDoForm.html'},res=>{
+        th.status_is_ok(res);
+        th.body_contains(res,'Title:');
+        th.body_does_not_contain(res,'login failed');
+        th.should_not_have_cookie(res,'message');
+        done();
+      })
+    })
+    it('redirects to /index.html if the user clicks on logout',done=>{
+      request(app,{method:'POST',url:'/index.html',body:'username=badUser'},res=>{
+        th.should_be_redirected_to(res,'/index.html');
+        done();
+      })
+    })
+  })
+
+  describe('GET /toDoForm.html',()=>{
+    it('serves the user with his new toDo',done=>{
+      request(app,{method:'GET',url:'/toDoForm.html'},res=>{
+        th.status_is_ok(res);
+        th.body_contains(res,'New ToDo');
+        th.body_does_not_contain(res,'login failed');
+        th.should_not_have_cookie(res,'message');
+        done();
+      })
+    })
+    it('redirects to /',done=>{
+      request(app,{method:'POST',url:'/index.html',body:'username=badUser'},res=>{
+        th.should_be_redirected_to(res,'/index.html');
+        done();
+      })
+    })
+  })
+
 })
