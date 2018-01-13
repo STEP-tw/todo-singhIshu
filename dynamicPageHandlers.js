@@ -21,6 +21,14 @@ pageLib.handleHomePage = (req,res) => {
   res.end();
 }
 
+pageLib.viewPreviousTodo = (req,res) => {
+  if (req.user) {
+    res.write(lib.displayToDo(req.url,req.user.username));
+    res.end();
+  }
+  return;
+}
+
 pageLib.handlePostNewTodo = (req,res) => {
   lib.storeTheUserTODOs(req.user,req.body);
   let toDoPage = lib.displayToDo(req.body);

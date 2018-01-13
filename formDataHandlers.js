@@ -24,12 +24,18 @@ lib.isATitleOfSameUser = (toDoList,title,username) => {
   })
 }
 
+lib.displayToDo = (title,username) => {
+  let toDoList = lib.getToDoDataBase();
+  if (lib.isATitleOfSameUser(toDoList,title,username)) {
+    return username;
+  }
+  return;
+}
+
 lib.getPreviousToDo = (title,username) => {
   let toDoLists = lib.getToDoDataBase();
   for (var index = 0; index < toDoLists.length; index++) {
-    // console.log(title,username);
     if (lib.isSameTitleAndUser(toDoLists[index],title,username)) {
-      // console.log("same title");
       return lib.displayToDo(toDoLists[index]);
     }
     return;
