@@ -22,9 +22,20 @@ let loadUser = (req,res)=>{
   }
 };
 
+let redirectLoggedInUserToLogin = (req,res)=>{
+  if(req.urlIsOneOf(['/logout','/home','/toDoForm.html']) & !req.user) res.redirect('/index.html');
+};
+
+let redirectLoggedOutUserToLogin = (req,res)=>{
+  if(req.urlIsOneOf(['/logout']) && req.user) res.redirect('/index.html');
+};
+
+
 let app = WebApp.create();
 app.use(logRequest);
 app.use(loadUser);
+app.use(redirectLoggedInUserToLogin);
+app.use(redirectLoggedOutUserToLogin);
 app.get('/',(req,res)=>{
   res.redirect('/index.html');
 });
