@@ -1,6 +1,6 @@
 let chai = require('chai');
 let assert = chai.assert;
-let ToDoItem = require('../../model/toDoItem.js');
+let ToDoItem = require('../model/toDoItem.js');
 
 describe('ToDoItem',()=>{
   describe('new ToDoItem()',()=>{
@@ -13,7 +13,7 @@ describe('ToDoItem',()=>{
       let original = { text:"go shower",status :false};
       let expected = { text : "go to shower",status :false};
       let toDoItem = new ToDoItem("go shower");
-      toDoItem.editToDoItem("go to shower");
+      toDoItem.edit("go to shower");
       assert.deepEqual(toDoItem,expected);
     })
     it("the toDoItem can be marked as done",()=>{

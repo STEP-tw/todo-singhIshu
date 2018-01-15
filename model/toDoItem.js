@@ -3,7 +3,7 @@ class ToDoItem {
     this.text = text;
     this.status = status || false;
   }
-  editToDoItem(newText){
+  edit(newText){
     this.text = newText;
   }
   setDone(){
