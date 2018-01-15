@@ -8,6 +8,12 @@ const getLoginPage = (req,res)=>{
 
 let pageLib = {};
 
+const isATitleOfSameUser = (toDoList,title,username) => {
+  return toDoList.some(function(toDo) {
+    return lib.isSameTitleAndUser(toDo,title,username);
+  })
+}
+
 pageLib.handleGetMainPage = (req,res) =>{
   let loginPage = getLoginPage();
   res.setHeader('Content-type','text/html');
@@ -21,9 +27,14 @@ pageLib.handleHomePage = (req,res) => {
   res.end();
 }
 
+pageLib.isAUserAndNotAStaticPage = (req) =>{
+  let staticPages = ['/home','/index.html'];
+  return req.user && !staticPages.includes(req.url);
+}
+
 pageLib.viewPreviousTodo = (req,res) => {
-  if (req.user) {
-    res.write(lib.displayToDo(req.url,req.user.username));
+  if (pageLib.isAUserAndNotAStaticPage(req)) {
+    res.write(lib.displayPreviousToDo(req.url.slice(1),req.user.username))
     res.end();
   }
   return;

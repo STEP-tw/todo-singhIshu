@@ -44,7 +44,6 @@ lib.getPreviousToDo = (title,username) => {
 
 lib.displayPreviousToDo = (title,userName) => {
   let toDoList = lib.getToDoDataBase();
-  // console.log(lib.isATitleOfSameUser(toDoList,title,userName));
   if (lib.isATitleOfSameUser(toDoList,title,userName)) {
     return lib.getPreviousToDo(title,userName);
   }

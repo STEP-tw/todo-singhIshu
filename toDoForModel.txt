@@ -1,0 +1,23 @@
+#Objective
+  To make the model of the toDo
+
+ToDoItem
+  #Inputs of ToDoItem
+    Title and Status
+
+  #Functions of ToDoItem
+    Edit a ToDo item
+    Make done
+    Mark undone
+
+ToDoList
+  #Inputs of ToDoList
+    Title
+    Description
+    ToDoItems
+
+  #Functions Of ToDoList
+    Add a Title
+    Add a Description
+    Add a ToDoItem
+    Remove A ToDoItems

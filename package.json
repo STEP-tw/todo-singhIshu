@@ -3,10 +3,9 @@
   "version": "0.0.1",
   "description": "App that will help users to build their own toDos",
   "main": "src/index.js",
-  "dependencies": {
-    "chai": "^4.1.2"
-  },
+  "dependencies": {},
   "devDependencies": {
+    "chai": "^4.1.2",
     "mocha": "^3.4.2"
   },
   "scripts": {

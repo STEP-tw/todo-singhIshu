@@ -36,6 +36,7 @@ app.use(logRequest);
 app.use(loadUser);
 app.use(redirectLoggedInUserToLogin);
 app.use(redirectLoggedOutUserToLogin);
+app.use(lib.viewPreviousTodo);
 app.get('/',(req,res)=>{
   res.redirect('/index.html');
 });
