@@ -17,31 +17,31 @@ class ToDo {
     let newToDoItem = new ToDoItem(title,this.counter++,status);
     this.toDoItems.push(newToDoItem);
   }
-  getIndexOfToDoItem(toDoItem){
+  getIndexOfToDoItem(toDoItemID){
     return this.toDoItems.findIndex(function(item) {
-      return toDoItem.id == item.id;
+      return toDoItemID == item.id;
     })
   }
-  getToDoItem(toDoItem){
+  getToDoItem(toDoItemID){
     return this.toDoItems.find(function(item) {
-      return toDoItem.id == item.id;
+      return toDoItemID == item.id;
     })
   }
-  deleteToDoItem(toDoItem){
-    let indexOfToDoItem = this.getIndexOfToDoItem(toDoItem);
+  deleteToDoItem(toDoItemID){
+    let indexOfToDoItem = this.getIndexOfToDoItem(toDoItemID);
     this.toDoItems.splice(indexOfToDoItem,1);
   }
-  editToDoItem(toDoItem,newText){
-    let oldToDoItem = this.getToDoItem(toDoItem);
-    oldToDoItem.text = newText;
+  editToDoItem(toDoItemID,newText){
+    let oldToDoItem = this.getToDoItem(toDoItemID);
+    oldToDoItem.edit(newText);
   }
-  markItemAsDone(toDoItem){
-    let doneToDoItem = this.getToDoItem(toDoItem);
-    doneToDoItem.status = true;
+  markItemAsDone(toDoItemID){
+    let doneToDoItem = this.getToDoItem(toDoItemID);
+    doneToDoItem.setDone();
   }
-  markAsUndone(toDoItem){
-    let doneToDoItem = this.getToDoItem(toDoItem);
-    doneToDoItem.status = false;
+  markAsUndone(toDoItemID){
+    let doneToDoItem = this.getToDoItem(toDoItemID);
+    doneToDoItem.setUndone();
   }
 }
 

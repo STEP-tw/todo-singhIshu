@@ -38,7 +38,7 @@ describe('ToDo',()=>{
     it('getIndexOfToDoItem gives the first index of the given toDoItem',()=>{
       let toDo = new ToDo("make tee",1,"make ginjar tea");
       toDo.addToDoItem("get a cup of water",false);
-      let index = toDo.getIndexOfToDoItem({text:"get a cup of water",id:0,status:false});
+      let index = toDo.getIndexOfToDoItem(0);
       assert.equal(index,0);
     })
   })
@@ -46,7 +46,7 @@ describe('ToDo',()=>{
     it('deleteToDoItem removes that toDoItem from the toDoList',()=>{
       let toDo = new ToDo("make tee",1,"make ginjar tea");
       toDo.addToDoItem("get a cup of water",false);
-      toDo.deleteToDoItem({text:"get a cup of water",id:0,status:false});
+      toDo.deleteToDoItem(0);
       assert.deepEqual(toDo.toDoItems,[]);
     })
   })
@@ -54,7 +54,7 @@ describe('ToDo',()=>{
     it('editToDoItem sets new value to the selected toDoItem from the toDoList',()=>{
       let toDo = new ToDo("make tee",1,"make ginjar tea");
       toDo.addToDoItem("get a cup of H2O",false);
-      toDo.editToDoItem({text:"get a cup of H2O",id:0,status:false},"get a cup of water");
+      toDo.editToDoItem(0,"get a cup of water");
       assert.deepEqual(toDo.toDoItems,[{text:"get a cup of water",id:0,status:false}]);
     })
   })
@@ -62,7 +62,7 @@ describe('ToDo',()=>{
     it('markItemAsDone sets the toDoItem as done',()=>{
       let toDo = new ToDo("make tee",1,"make ginjar tea");
       toDo.addToDoItem("get a cup of H2O",false);
-      toDo.markItemAsDone({text:"get a cup of H2O",id:0,status:false});
+      toDo.markItemAsDone(0);
       assert.deepEqual(toDo.toDoItems,[{text:"get a cup of H2O",id:0,status:true}]);
     })
   })
@@ -70,7 +70,7 @@ describe('ToDo',()=>{
     it('markAsUndone sets the toDoItem as undone',()=>{
       let toDo = new ToDo("make tee",1,"make ginjar tea");
       toDo.addToDoItem("get a cup of H2O",false);
-      toDo.markAsUndone({text:"get a cup of H2O",id:0,status:false});
+      toDo.markAsUndone(0);
       assert.deepEqual(toDo.toDoItems,[{text:"get a cup of H2O",id:0,status:false}]);
     })
   })
