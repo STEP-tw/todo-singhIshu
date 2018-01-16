@@ -34,14 +34,6 @@ describe('ToDo',()=>{
       assert.deepEqual(toDoItem,toDo.toDoItems);
     })
   })
-  describe('getIndexOfToDoItem',()=>{
-    it('getIndexOfToDoItem gives the first index of the given toDoItem',()=>{
-      let toDo = new ToDo("make tee",1,"make ginjar tea");
-      toDo.addToDoItem("get a cup of water",false);
-      let index = toDo.getIndexOfToDoItem(0);
-      assert.equal(index,0);
-    })
-  })
   describe('deleteToDoItem',()=>{
     it('deleteToDoItem removes that toDoItem from the toDoList',()=>{
       let toDo = new ToDo("make tee",1,"make ginjar tea");
@@ -66,11 +58,11 @@ describe('ToDo',()=>{
       assert.deepEqual(toDo.toDoItems,[{text:"get a cup of H2O",id:0,status:true}]);
     })
   })
-  describe('markAsUndone',()=>{
-    it('markAsUndone sets the toDoItem as undone',()=>{
+  describe('markItemAsUndone',()=>{
+    it('markItemAsUndone sets the toDoItem as undone',()=>{
       let toDo = new ToDo("make tee",1,"make ginjar tea");
       toDo.addToDoItem("get a cup of H2O",false);
-      toDo.markAsUndone(0);
+      toDo.markItemAsUndone(0);
       assert.deepEqual(toDo.toDoItems,[{text:"get a cup of H2O",id:0,status:false}]);
     })
   })

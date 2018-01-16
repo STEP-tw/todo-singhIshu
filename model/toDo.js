@@ -3,7 +3,7 @@ class ToDo {
   constructor(title,id,description) {
     this.title = title;
     this.id = id;
-    this.description = description;
+    this.description = description || '';
     this.counter = 0;
     this.toDoItems = [];
   }
@@ -17,18 +17,14 @@ class ToDo {
     let newToDoItem = new ToDoItem(title,this.counter++,status);
     this.toDoItems.push(newToDoItem);
   }
-  getIndexOfToDoItem(toDoItemID){
-    return this.toDoItems.findIndex(function(item) {
-      return toDoItemID == item.id;
-    })
-  }
   getToDoItem(toDoItemID){
-    return this.toDoItems.find(function(item) {
+    return this.toDoItems.find((item)=>{
       return toDoItemID == item.id;
     })
   }
   deleteToDoItem(toDoItemID){
-    let indexOfToDoItem = this.getIndexOfToDoItem(toDoItemID);
+    let toDoItem = this.getToDoItem(toDoItemID);
+    let indexOfToDoItem = this.toDoItems.indexOf(toDoItem);
     this.toDoItems.splice(indexOfToDoItem,1);
   }
   editToDoItem(toDoItemID,newText){
@@ -39,7 +35,7 @@ class ToDo {
     let doneToDoItem = this.getToDoItem(toDoItemID);
     doneToDoItem.setDone();
   }
-  markAsUndone(toDoItemID){
+  markItemAsUndone(toDoItemID){
     let doneToDoItem = this.getToDoItem(toDoItemID);
     doneToDoItem.setUndone();
   }

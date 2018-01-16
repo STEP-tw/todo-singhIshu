@@ -10,60 +10,61 @@ describe('User',()=>{
       assert.deepEqual(expected,ishu);
     })
   })
-  describe('addToDoList',()=>{
-    it('addToDoList adds new toDoList to the userToDos',()=>{
+  describe('addToDo',()=>{
+    it('addToDo adds new toDo to the userToDos',()=>{
       let toDos = [{title:"wash clothes",counter :0,id:0,description:"sunday work",toDoItems:[]}];
       let ishu = new User("Ishu",1);
-      ishu.addToDoList("wash clothes","sunday work");
+      ishu.addToDo("wash clothes","sunday work");
       assert.deepEqual(toDos,ishu.toDos);
     })
-    it('addToDoList adds new toDoList without taking description userToDos',()=>{
+    it('addToDo adds new toDo without taking description userToDos',()=>{
       let toDos = [{title:"wash clothes",counter :0,id:0,description:"",toDoItems:[]}];
       let ishu = new User("Ishu",1);
-      ishu.addToDoList("wash clothes");
+      ishu.addToDo("wash clothes");
       assert.deepEqual(toDos,ishu.toDos);
     })
   })
-  describe('getIndexOfToDo',()=>{
-    it('getIndexOfToDo gives the index of the ToDo from the usermade ToDos',()=>{
+  describe('getAllToDoTitles',()=>{
+    it('getAllToDoTitles gives all the titles of the usermade ToDos',()=>{
+      let expectedToDo = ["wash clothes"]
       let ishu = new User("Ishu",1);
-      ishu.addToDoList("wash clothes","sunday work");
-      let toDoIndex = ishu.getIndexOfToDo(0);
-      assert.equal(toDoIndex,0);
-    })
-  })
-  describe('getUserToDo',()=>{
-    it('getUserToDo gives ToDo from the usermade ToDos',()=>{
-      let expectedToDo = {title:"wash clothes",counter :0,id:0,description:"",toDoItems:[]};
-      let ishu = new User("Ishu",1);
-      ishu.addToDoList("wash clothes");
-      let toDo = ishu.getUserToDo(0);
+      ishu.addToDo("wash clothes");
+      let toDo = ishu.getAllToDoTitles();
       assert.deepEqual(expectedToDo,toDo);
     })
   })
-  describe('deleteToDoList',()=>{
-    it('deleteToDoList deletes the given ToDo from the usermade ToDos',()=>{
+  describe('getRequestedToDo',()=>{
+    it('getRequestedToDo gives ToDo from the usermade ToDos',()=>{
+      let expectedToDo = {title:"wash clothes",counter :0,id:0,description:"",toDoItems:[]};
       let ishu = new User("Ishu",1);
-      ishu.addToDoList("wash clothes");
-      ishu.deleteToDoList(0);
+      ishu.addToDo("wash clothes");
+      let toDo = ishu.getRequestedToDo(0);
+      assert.deepEqual(expectedToDo,toDo);
+    })
+  })
+  describe('deleteToDo',()=>{
+    it('deleteToDo deletes the given ToDo from the usermade ToDos',()=>{
+      let ishu = new User("Ishu",1);
+      ishu.addToDo("wash clothes");
+      ishu.deleteToDo(0);
       assert.deepEqual(ishu.toDos,[]);
     })
   })
-  describe('editTitleOfToDoList',()=>{
-    it('editTitleOfToDoList sets new title to the given toDo',()=>{
+  describe('editTitleOfToDo',()=>{
+    it('editTitleOfToDo sets new title to the given toDo',()=>{
       let ishu = new User("Ishu",1);
       let expected = [{title:"wash clothes",counter :0,id:0,description:"",toDoItems:[]}];
-      ishu.addToDoList("wash cloth");
-      ishu.editTitleOfToDoList(0,"wash clothes");
+      ishu.addToDo("wash cloth");
+      ishu.editTitleOfToDo(0,"wash clothes");
       assert.deepEqual(ishu.toDos,expected);
     })
   })
-  describe('editDescrpOfToDoList',()=>{
-    it('editDescrpOfToDoList sets new description to the given toDo',()=>{
+  describe('editDescrpOfToDo',()=>{
+    it('editDescrpOfToDo sets new description to the given toDo',()=>{
       let ishu = new User("Ishu",1);
       let expected = [{title:"wash clothes",counter :0,id:0,description:"sunday task",toDoItems:[]}];
-      ishu.addToDoList("wash clothes");
-      ishu.editDescrpOfToDoList(0,"sunday task");
+      ishu.addToDo("wash clothes");
+      ishu.editDescrpOfToDo(0,"sunday task");
       assert.deepEqual(ishu.toDos,expected);
     })
   })
@@ -71,7 +72,7 @@ describe('User',()=>{
     it('addToDoItemInToDo adds new ToDoItem to the given toDo',()=>{
       let ishu = new User("Ishu",1);
       let toDoItems =[{text:"bring dirty clothes",id:0,status:false}];
-      ishu.addToDoList("wash cloth");
+      ishu.addToDo("wash cloth");
       ishu.addToDoItemInToDo(0,'bring dirty clothes');
       assert.deepEqual(ishu.toDos[0].toDoItems,toDoItems);
     })
@@ -79,7 +80,7 @@ describe('User',()=>{
   describe('deleteToDoItemInToDo',()=>{
     it('deleteToDoItemInToDo adds new ToDoItem to the given toDo',()=>{
       let ishu = new User("Ishu",1);
-      ishu.addToDoList("wash cloth");
+      ishu.addToDo("wash cloth");
       ishu.deleteToDoItemInToDo(0,0);
       assert.deepEqual(ishu.toDos[0].toDoItems,[]);
     })
@@ -88,7 +89,7 @@ describe('User',()=>{
     it('editToDoItemInToDo sets new value to the toDoItem in given toDo',()=>{
       let ishu = new User("Ishu",1);
       let toDoItems =[{text:"bring dirty clothes",id:0,status:false}];
-      ishu.addToDoList("wash cloth");
+      ishu.addToDo("wash cloth");
       ishu.addToDoItemInToDo(0,'bring dirty kapde');
       ishu.editToDoItemInToDo(0,0,'bring dirty clothes')
       assert.deepEqual(ishu.toDos[0].toDoItems,toDoItems);
@@ -98,7 +99,7 @@ describe('User',()=>{
     it('markToDoItemAsDone set the toDoItem of the toDo as done',()=>{
       let ishu = new User("Ishu",1);
       let toDoItems =[{text:"bring dirty clothes",id:0,status:true}];
-      ishu.addToDoList("wash cloth");
+      ishu.addToDo("wash cloth");
       ishu.addToDoItemInToDo(0,'bring dirty clothes');
       ishu.markToDoItemAsDone(0,0);
       assert.deepEqual(ishu.toDos[0].toDoItems,toDoItems);
@@ -108,7 +109,7 @@ describe('User',()=>{
     it('markToDoItemAsUndone set the toDoItem of the toDo as undone',()=>{
       let ishu = new User("Ishu",1);
       let toDoItems =[{text:"bring dirty clothes",id:0,status:false}];
-      ishu.addToDoList("wash cloth");
+      ishu.addToDo("wash cloth");
       ishu.addToDoItemInToDo(0,'bring dirty clothes');
       ishu.markToDoItemAsUndone(0,0);
       assert.deepEqual(ishu.toDos[0].toDoItems,toDoItems);
