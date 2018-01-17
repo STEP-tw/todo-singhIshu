@@ -1,11 +1,11 @@
 class ToDoItem {
-  constructor(text,id) {
-    this.text = text;
+  constructor(itemText,id) {
+    this.itemText = itemText;
     this.status = false;
     this.id = id;
   }
-  edit(newText){
-    this.text = newText;
+  edit(newTitle){
+    this.itemText = newTitle;
   }
   setDone(){
     this.status = true;

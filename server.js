@@ -4,6 +4,8 @@ const WebApp = require('./webapp');
 const lib = require('./dynamicPageHandlers.js');
 let registered_users = [{username:'bhanutv',name:'Bhanu Teja Verma'},{username:'ishusi',name:'Ishu Singh'}];
 let toS = o=>JSON.stringify(o,null,2);
+const User = require('./model/user.js');
+let ishu = new User("ishusi",2);
 
 let logRequest = (req,res)=>{
   let text = ['--------------------------',
@@ -36,7 +38,6 @@ app.use(logRequest);
 app.use(loadUser);
 app.use(redirectLoggedInUserToLogin);
 app.use(redirectLoggedOutUserToLogin);
-app.use(lib.viewPreviousTodo);
 app.get('/',(req,res)=>{
   res.redirect('/index.html');
 });

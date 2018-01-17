@@ -28,7 +28,7 @@ describe('ToDo',()=>{
   })
   describe('addToDoItem',()=>{
     it('addToDoItem adds a toDoItem to the toDoItem List',()=>{
-      let toDoItem =[{text:"get a cup of water",id:0,status:false}];
+      let toDoItem =[{itemText:"get a cup of water",id:0,status:false}];
       let toDo = new ToDo("make tee",1,"make ginjar tea");
       toDo.addToDoItem("get a cup of water",false);
       assert.deepEqual(toDoItem,toDo.toDoItems);
@@ -47,7 +47,7 @@ describe('ToDo',()=>{
       let toDo = new ToDo("make tee",1,"make ginjar tea");
       toDo.addToDoItem("get a cup of H2O",false);
       toDo.editToDoItem(0,"get a cup of water");
-      assert.deepEqual(toDo.toDoItems,[{text:"get a cup of water",id:0,status:false}]);
+      assert.deepEqual(toDo.toDoItems,[{itemText:"get a cup of water",id:0,status:false}]);
     })
   })
   describe('markItemAsDone',()=>{
@@ -55,7 +55,7 @@ describe('ToDo',()=>{
       let toDo = new ToDo("make tee",1,"make ginjar tea");
       toDo.addToDoItem("get a cup of H2O",false);
       toDo.markItemAsDone(0);
-      assert.deepEqual(toDo.toDoItems,[{text:"get a cup of H2O",id:0,status:true}]);
+      assert.deepEqual(toDo.toDoItems,[{itemText:"get a cup of H2O",id:0,status:true}]);
     })
   })
   describe('markItemAsUndone',()=>{
@@ -63,7 +63,7 @@ describe('ToDo',()=>{
       let toDo = new ToDo("make tee",1,"make ginjar tea");
       toDo.addToDoItem("get a cup of H2O",false);
       toDo.markItemAsUndone(0);
-      assert.deepEqual(toDo.toDoItems,[{text:"get a cup of H2O",id:0,status:false}]);
+      assert.deepEqual(toDo.toDoItems,[{itemText:"get a cup of H2O",id:0,status:false}]);
     })
   })
 })

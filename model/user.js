@@ -20,6 +20,10 @@ class User {
       return toDo.title;
     })
   }
+  getToDoItemInToDo(toDoID,toDoItemID){
+    let toDo = this.getRequestedToDo(toDoID);
+    return toDo.getToDoItem(toDoItemID);
+  }
   deleteToDo(toDoID){
     let toDo = this.getRequestedToDo(toDoID);
     let toDoIndex = this.toDos.indexOf(toDo);
@@ -33,9 +37,9 @@ class User {
     let toDo = this.getRequestedToDo(toDoID);
     toDo.description = newDescrip;
   }
-  addToDoItemInToDo(toDoID,title,status=false){
+  addToDoItemInToDo(toDoID,title){
     let toDo = this.getRequestedToDo(toDoID);
-    toDo.addToDoItem(title,status);
+    toDo.addToDoItem(title);
   }
   deleteToDoItemInToDo(toDoID,toDoItemID){
     let toDo = this.getRequestedToDo(toDoID);

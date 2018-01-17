@@ -4,14 +4,14 @@ let ToDoItem = require('../model/toDoItem.js');
 
 describe('ToDoItem',()=>{
   describe('new ToDoItem()',()=>{
-    it('tests that the ToDoItem has the text and status or not',()=>{
-      let expected = {text:"go to shower",id:1,status:false}
+    it('tests that the ToDoItem has the itemText and status or not',()=>{
+      let expected = {itemText:"go to shower",id:1,status:false}
       let toDoItem = new ToDoItem("go to shower",1);
       assert.deepEqual(toDoItem,expected);
     })
-    it("the text of the toDoItem can be edited",()=>{
-      let original = { text:"go shower",id:1,status :false};
-      let expected = { text : "go to shower",id:1,status :false};
+    it("the itemText of the toDoItem can be edited",()=>{
+      let original = { itemText:"go shower",id:1,status :false};
+      let expected = { itemText : "go to shower",id:1,status :false};
       let toDoItem = new ToDoItem("go shower",1);
       toDoItem.edit("go to shower");
       assert.deepEqual(toDoItem,expected);

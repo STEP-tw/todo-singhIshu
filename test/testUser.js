@@ -71,7 +71,7 @@ describe('User',()=>{
   describe('addToDoItemInToDo',()=>{
     it('addToDoItemInToDo adds new ToDoItem to the given toDo',()=>{
       let ishu = new User("Ishu",1);
-      let toDoItems =[{text:"bring dirty clothes",id:0,status:false}];
+      let toDoItems =[{itemText:"bring dirty clothes",id:0,status:false}];
       ishu.addToDo("wash cloth");
       ishu.addToDoItemInToDo(0,'bring dirty clothes');
       assert.deepEqual(ishu.toDos[0].toDoItems,toDoItems);
@@ -88,7 +88,7 @@ describe('User',()=>{
   describe('editToDoItemInToDo',()=>{
     it('editToDoItemInToDo sets new value to the toDoItem in given toDo',()=>{
       let ishu = new User("Ishu",1);
-      let toDoItems =[{text:"bring dirty clothes",id:0,status:false}];
+      let toDoItems =[{itemText:"bring dirty clothes",id:0,status:false}];
       ishu.addToDo("wash cloth");
       ishu.addToDoItemInToDo(0,'bring dirty kapde');
       ishu.editToDoItemInToDo(0,0,'bring dirty clothes')
@@ -98,7 +98,7 @@ describe('User',()=>{
   describe('markToDoItemAsDone',()=>{
     it('markToDoItemAsDone set the toDoItem of the toDo as done',()=>{
       let ishu = new User("Ishu",1);
-      let toDoItems =[{text:"bring dirty clothes",id:0,status:true}];
+      let toDoItems =[{itemText:"bring dirty clothes",id:0,status:true}];
       ishu.addToDo("wash cloth");
       ishu.addToDoItemInToDo(0,'bring dirty clothes');
       ishu.markToDoItemAsDone(0,0);
@@ -108,7 +108,7 @@ describe('User',()=>{
   describe('markToDoItemAsUndone',()=>{
     it('markToDoItemAsUndone set the toDoItem of the toDo as undone',()=>{
       let ishu = new User("Ishu",1);
-      let toDoItems =[{text:"bring dirty clothes",id:0,status:false}];
+      let toDoItems =[{itemText:"bring dirty clothes",id:0,status:false}];
       ishu.addToDo("wash cloth");
       ishu.addToDoItemInToDo(0,'bring dirty clothes');
       ishu.markToDoItemAsUndone(0,0);
