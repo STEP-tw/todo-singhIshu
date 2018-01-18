@@ -35,123 +35,123 @@ describe('ToDoApp',()=>{
       assert.deepEqual(toDoApp.users['ishu'].toDos,expectedToDo);
     })
   })
-  describe('getRequstdToDoOfUser()',()=>{
-    it('getRequstdToDoOfUser adds a new toDo for the user',()=>{
+  describe('getUserTodo()',()=>{
+    it('getUserTodo adds a new toDo for the user',()=>{
       let expectedToDo = {title:"make Tea",id:0,description:"make ginger tea",counter:0,toDoItems:[]};
       let toDoApp = new ToDoApp();
       toDoApp.addUser('ishu',12);
       toDoApp.addToDoForUser('ishu','make Tea','make ginger tea');
-      let requestedUser=toDoApp.getRequstdToDoOfUser('ishu',0);
+      let requestedUser=toDoApp.getUserTodo('ishu',0);
       assert.deepEqual(requestedUser,expectedToDo);
     })
   })
-  describe('getRequestedToDoItemOfUser()',()=>{
-    it('getRequestedToDoItemOfUser gives the toDoItem of the userTODO',()=>{
+  describe('getToDoItemFrom()',()=>{
+    it('getToDoItemFrom gives the toDoItem of the userTODO',()=>{
       let expectedToDo = {itemText:"get a cup of H2O",id:0,status:false};
       let toDoApp = new ToDoApp();
       toDoApp.addUser('ishu',12);
       toDoApp.addToDoForUser('ishu','make Tea','make ginger tea');
-      toDoApp.addToDoItemInUserToDo('ishu',0,'get a cup of H2O');
-      let requestedUser=toDoApp.getRequestedToDoItemOfUser('ishu',0,0);
+      toDoApp.addNewToDoItem('ishu',0,'get a cup of H2O');
+      let requestedUser=toDoApp.getToDoItemFrom('ishu',0,0);
       assert.deepEqual(requestedUser,expectedToDo);
     })
   })
-  describe('getAllToDoTitlesOfUser()',()=>{
-    it('getAllToDoTitlesOfUser gives list of all the toDos of the user',()=>{
+  describe('getAllTodoLists()',()=>{
+    it('getAllTodoLists gives list of all the toDos of the user',()=>{
       let toDoApp = new ToDoApp();
       toDoApp.addUser('ishu',12);
       toDoApp.addToDoForUser('ishu','make Tea','make ginger tea');
       toDoApp.addToDoForUser('ishu','have lunch');
-      let toDoTitles=toDoApp.getAllToDoTitlesOfUser('ishu');
+      let toDoTitles=toDoApp.getAllTodoLists('ishu');
       assert.deepEqual(toDoTitles,['make Tea','have lunch']);
     })
   })
-  describe('deleteAToDoOfUser()',()=>{
-    it('deleteAToDoOfUser takes the id of the toDo and deletes the user toDo',()=>{
+  describe('deleteTodoList()',()=>{
+    it('deleteTodoList takes the id of the toDo and deletes the user toDo',()=>{
       let expectedToDos = [{title:"make Tea",id:0,description:"make ginger tea",counter:0,toDoItems:[]}];
       let toDoApp = new ToDoApp();
       toDoApp.addUser('ishu',12);
       toDoApp.addToDoForUser('ishu','make Tea','make ginger tea');
       toDoApp.addToDoForUser('ishu','have lunch');
-      toDoApp.deleteAToDoOfUser('ishu',1);
+      toDoApp.deleteTodoList('ishu',1);
       assert.deepEqual(toDoApp.users['ishu'].toDos,expectedToDos);
     })
   })
-  describe('editTitleOfUserToDo()',()=>{
-    it('editTitleOfUserToDo changes the value of the title of the userTODO',()=>{
+  describe('editTodoTitle()',()=>{
+    it('editTodoTitle changes the value of the title of the userTODO',()=>{
       let expectedToDos = [{title:"make Coffee",id:0,description:"",counter:0,toDoItems:[]}];
       let toDoApp = new ToDoApp();
       toDoApp.addUser('ishu',12);
       toDoApp.addToDoForUser('ishu','make Tea');
-      toDoApp.editTitleOfUserToDo('ishu',0,"make Coffee");
+      toDoApp.editTodoTitle('ishu',0,"make Coffee");
       assert.deepEqual(toDoApp.users['ishu'].toDos,expectedToDos);
     })
   })
-  describe('editDescrpOfUserToDo()',()=>{
-    it('editDescrpOfUserToDo changes the value of the description of the userTODO',()=>{
+  describe('editTodoDescription()',()=>{
+    it('editTodoDescription changes the value of the description of the userTODO',()=>{
       let expectedToDos = [{title:"make Coffee",id:0,description:"hard coffee",counter:0,toDoItems:[]}];
       let toDoApp = new ToDoApp();
       toDoApp.addUser('ishu',12);
       toDoApp.addToDoForUser('ishu','make Coffee','light coffee');
-      toDoApp.editDescrpOfUserToDo('ishu',0,"hard coffee");
+      toDoApp.editTodoDescription('ishu',0,"hard coffee");
       assert.deepEqual(toDoApp.users['ishu'].toDos,expectedToDos);
     })
   })
-  describe('addToDoItemInUserToDo()',()=>{
-    it('addToDoItemInUserToDo adds new toDoItem in the userToDo',()=>{
+  describe('addNewToDoItem()',()=>{
+    it('addNewToDoItem adds new toDoItem in the userToDo',()=>{
       let expectedToDoItems = {itemText:"get a cup of water",id:0,status:false};
       let toDoApp = new ToDoApp();
       toDoApp.addUser('ishu',12);
       toDoApp.addToDoForUser('ishu','make Coffee','light coffee');
-      toDoApp.addToDoItemInUserToDo('ishu',0,"get a cup of water");
-      let toDoItem = toDoApp.getRequestedToDoItemOfUser('ishu',0,0);
+      toDoApp.addNewToDoItem('ishu',0,"get a cup of water");
+      let toDoItem = toDoApp.getToDoItemFrom('ishu',0,0);
       assert.deepEqual(toDoItem,expectedToDoItems);
     })
   })
-  describe('deleteToDoItemInUserToDo()',()=>{
-    it('deleteToDoItemInUserToDo deletes toDoItem in the userToDo',()=>{
+  describe('deleteToDoItem()',()=>{
+    it('deleteToDoItem deletes toDoItem in the userToDo',()=>{
       let expectedToDoItems = {itemText:"get a cup of water",id:0,status:false};
       let toDoApp = new ToDoApp();
       toDoApp.addUser('ishu',12);
       toDoApp.addToDoForUser('ishu','make Coffee','light coffee');
-      toDoApp.deleteToDoItemInUserToDo('ishu',0,0);
-      let toDoItem = toDoApp.getRequestedToDoItemOfUser('ishu',0,0);
+      toDoApp.deleteToDoItem('ishu',0,0);
+      let toDoItem = toDoApp.getToDoItemFrom('ishu',0,0);
       assert.deepEqual(toDoItem,undefined);
     })
   })
-  describe('editToDoItemInUserToDo()',()=>{
-    it('editToDoItemInUserToDo edits the title of the toDoItem of userTODO',()=>{
+  describe('updateToDoItem()',()=>{
+    it('updateToDoItem edits the title of the toDoItem of userTODO',()=>{
       let expectedToDoItems = {itemText:"get a cup of water",id:0,status:false};
       let toDoApp = new ToDoApp();
       toDoApp.addUser('ishu',12);
       toDoApp.addToDoForUser('ishu','make Coffee','light coffee');
-      toDoApp.addToDoItemInUserToDo('ishu',0,"get a cup of water");
-      toDoApp.editToDoItemInUserToDo('ishu',0,0,"get a cup of water");
-      let toDoItem = toDoApp.getRequestedToDoItemOfUser('ishu',0,0)
+      toDoApp.addNewToDoItem('ishu',0,"get a cup of water");
+      toDoApp.updateToDoItem('ishu',0,0,"get a cup of water");
+      let toDoItem = toDoApp.getToDoItemFrom('ishu',0,0)
       assert.deepEqual(toDoItem,expectedToDoItems);
     })
   })
-  describe('markToDoItemOfUserToDoAsDone()',()=>{
-    it('markToDoItemOfUserToDoAsDone edits the title of the toDoItem of userTODO',()=>{
+  describe('markItemDone()',()=>{
+    it('markItemDone edits the title of the toDoItem of userTODO',()=>{
       let expectedToDoItems = {itemText:"get a cup of water",id:0,status:true};
       let toDoApp = new ToDoApp();
       toDoApp.addUser('ishu',12);
       toDoApp.addToDoForUser('ishu','make Coffee','light coffee');
-      toDoApp.addToDoItemInUserToDo('ishu',0,"get a cup of water");
-      toDoApp.markToDoItemOfUserToDoAsDone('ishu',0,0,"get a cup of water");
-      let toDoItem = toDoApp.getRequestedToDoItemOfUser('ishu',0,0)
+      toDoApp.addNewToDoItem('ishu',0,"get a cup of water");
+      toDoApp.markItemDone('ishu',0,0,"get a cup of water");
+      let toDoItem = toDoApp.getToDoItemFrom('ishu',0,0)
       assert.deepEqual(toDoItem,expectedToDoItems);
     })
   })
-  describe('markToDoItemOfUserToDoNotDone()',()=>{
-    it('markToDoItemOfUserToDoNotDone edits the title of the toDoItem of userTODO',()=>{
+  describe('markItemNotDone()',()=>{
+    it('markItemNotDone edits the title of the toDoItem of userTODO',()=>{
       let expectedToDoItems = {itemText:"get a cup of water",id:0,status:false};
       let toDoApp = new ToDoApp();
       toDoApp.addUser('ishu',12);
       toDoApp.addToDoForUser('ishu','make Coffee','light coffee');
-      toDoApp.addToDoItemInUserToDo('ishu',0,"get a cup of water");
-      toDoApp.markToDoItemOfUserToDoNotDone('ishu',0,0,"get a cup of water");
-      let toDoItem = toDoApp.getRequestedToDoItemOfUser('ishu',0,0)
+      toDoApp.addNewToDoItem('ishu',0,"get a cup of water");
+      toDoApp.markItemNotDone('ishu',0,0,"get a cup of water");
+      let toDoItem = toDoApp.getToDoItemFrom('ishu',0,0)
       assert.deepEqual(toDoItem,expectedToDoItems);
     })
   })

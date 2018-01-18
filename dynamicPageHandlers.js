@@ -1,6 +1,10 @@
 const fs = require('fs');
 const lib = require('./formDataHandlers.js');
-let registered_users = [{username:'bhanutv',name:'Bhanu Teja Verma'},{username:'ishusi',name:'Ishu Singh'}];
+const ToDoApp = require('./model/toDoApp.js');
+
+let toDoApp = new ToDoApp();
+toDoApp.addUser('ishusi');
+toDoApp.addUser('ponu');
 
 const getLoginPage = (req,res)=>{
   return fs.readFileSync('./public/index.html','utf8');

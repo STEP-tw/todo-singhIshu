@@ -10,7 +10,7 @@ class User {
     let newToDo = new ToDo(title,this.counter++,description);
     this.toDos.push(newToDo);
   }
-  getRequestedToDo(toDoID){
+  getToDo(toDoID){
     return this.toDos.find((toDo)=>{
       return toDo.id == toDoID;
     })
@@ -20,41 +20,41 @@ class User {
       return toDo.title;
     })
   }
-  getToDoItemInToDo(toDoID,toDoItemID){
-    let toDo = this.getRequestedToDo(toDoID);
+  getToDoItem(toDoID,toDoItemID){
+    let toDo = this.getToDo(toDoID);
     return toDo.getToDoItem(toDoItemID);
   }
   deleteToDo(toDoID){
-    let toDo = this.getRequestedToDo(toDoID);
+    let toDo = this.getToDo(toDoID);
     let toDoIndex = this.toDos.indexOf(toDo);
     this.toDos.splice(toDoIndex,1);
   }
   editTitleOfToDo(toDoID,newTitle){
-    let toDo = this.getRequestedToDo(toDoID);
+    let toDo = this.getToDo(toDoID);
     toDo.title = newTitle;
   }
   editDescrpOfToDo(toDoID,newDescrip){
-    let toDo = this.getRequestedToDo(toDoID);
+    let toDo = this.getToDo(toDoID);
     toDo.description = newDescrip;
   }
-  addToDoItemInToDo(toDoID,title){
-    let toDo = this.getRequestedToDo(toDoID);
+  addItemInToDo(toDoID,title){
+    let toDo = this.getToDo(toDoID);
     toDo.addToDoItem(title);
   }
-  deleteToDoItemInToDo(toDoID,toDoItemID){
-    let toDo = this.getRequestedToDo(toDoID);
+  deleteItemInToDo(toDoID,toDoItemID){
+    let toDo = this.getToDo(toDoID);
     toDo.deleteToDoItem(toDoItemID);
   }
-  editToDoItemInToDo(toDoID,toDoItemID,title){
-    let toDo = this.getRequestedToDo(toDoID);
+  editItemInToDo(toDoID,toDoItemID,title){
+    let toDo = this.getToDo(toDoID);
     toDo.editToDoItem(toDoItemID,title);
   }
   markToDoItemAsDone(toDoID,toDoItemID){
-    let toDo = this.getRequestedToDo(toDoID);
+    let toDo = this.getToDo(toDoID);
     toDo.markItemAsDone(toDoItemID);
   }
   markToDoItemAsUndone(toDoID,toDoItemID){
-    let toDo = this.getRequestedToDo(toDoID);
+    let toDo = this.getToDo(toDoID);
     toDo.markItemAsUndone(toDoItemID);
   }
 }

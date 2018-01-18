@@ -13,51 +13,50 @@ class ToDoApp {
     let user = this.users[username];
     user.addToDo(title,description);
   }
-  getRequstdToDoOfUser(username,toDoID){
+  getUserTodo(username,toDoID){
     let user = this.users[username];
-    return user.getRequestedToDo(toDoID);
+    return user.getToDo(toDoID);
   }
-  getRequestedToDoItemOfUser(username,toDoID,toDoItemID){
+  getToDoItemFrom(username,toDoID,toDoItemID){
     let user = this.users[username];
-    return user.getToDoItemInToDo(toDoID,toDoItemID);
+    return user.getToDoItem(toDoID,toDoItemID);
   }
-  getAllToDoTitlesOfUser(username){
+  getAllTodoLists(username){
     let user = this.users[username];
     return user.getAllToDoTitles();
   }
-  deleteAToDoOfUser(username,toDoID){
+  deleteTodoList(username,toDoID){
     let user = this.users[username];
     user.deleteToDo(toDoID);
   }
-  editTitleOfUserToDo(username,toDoID,title){
+  editTodoTitle(username,toDoID,title){
     let user = this.users[username];
     user.editTitleOfToDo(toDoID,title);
   }
-  editDescrpOfUserToDo(username,toDoID,description){
+  editTodoDescription(username,toDoID,description){
     let user = this.users[username];
     user.editDescrpOfToDo(toDoID,description);
   }
-  addToDoItemInUserToDo(username,toDoID,itemText){
+  addNewToDoItem(username,toDoID,itemText){
     let user = this.users[username];
-    user.addToDoItemInToDo(toDoID,itemText);
+    user.addItemInToDo(toDoID,itemText);
   }
-  deleteToDoItemInUserToDo(username,toDoID,toDoItemID){
+  deleteToDoItem(username,toDoID,toDoItemID){
     let user = this.users[username];
-    user.deleteToDoItemInToDo(toDoID,toDoItemID);
+    user.deleteItemInToDo(toDoID,toDoItemID);
   }
-  editToDoItemInUserToDo(username,toDoID,toDoItemID,itemText){
+  updateToDoItem(username,toDoID,toDoItemID,itemText){
     let user = this.users[username];
-    user.editToDoItemInToDo(toDoID,toDoItemID,itemText);
+    user.editItemInToDo(toDoID,toDoItemID,itemText);
   }
-  markToDoItemOfUserToDoAsDone(username,toDoID,toDoItemID){
+  markItemDone(username,toDoID,toDoItemID){
     let user = this.users[username];
     user.markToDoItemAsDone(toDoID,toDoItemID);
   }
-  markToDoItemOfUserToDoNotDone(username,toDoID,toDoItemID){
+  markItemNotDone(username,toDoID,toDoItemID){
     let user = this.users[username];
     user.markToDoItemAsUndone(toDoID,toDoItemID);
   }
 }
-
 
 module.exports = ToDoApp;

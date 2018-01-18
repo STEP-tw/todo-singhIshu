@@ -33,12 +33,12 @@ describe('User',()=>{
       assert.deepEqual(expectedToDo,toDo);
     })
   })
-  describe('getRequestedToDo',()=>{
-    it('getRequestedToDo gives ToDo from the usermade ToDos',()=>{
+  describe('getToDo',()=>{
+    it('getToDo gives ToDo from the usermade ToDos',()=>{
       let expectedToDo = {title:"wash clothes",counter :0,id:0,description:"",toDoItems:[]};
       let ishu = new User("Ishu",1);
       ishu.addToDo("wash clothes");
-      let toDo = ishu.getRequestedToDo(0);
+      let toDo = ishu.getToDo(0);
       assert.deepEqual(expectedToDo,toDo);
     })
   })
@@ -68,30 +68,30 @@ describe('User',()=>{
       assert.deepEqual(ishu.toDos,expected);
     })
   })
-  describe('addToDoItemInToDo',()=>{
-    it('addToDoItemInToDo adds new ToDoItem to the given toDo',()=>{
+  describe('addItemInToDo',()=>{
+    it('addItemInToDo adds new ToDoItem to the given toDo',()=>{
       let ishu = new User("Ishu",1);
       let toDoItems =[{itemText:"bring dirty clothes",id:0,status:false}];
       ishu.addToDo("wash cloth");
-      ishu.addToDoItemInToDo(0,'bring dirty clothes');
+      ishu.addItemInToDo(0,'bring dirty clothes');
       assert.deepEqual(ishu.toDos[0].toDoItems,toDoItems);
     })
   })
-  describe('deleteToDoItemInToDo',()=>{
-    it('deleteToDoItemInToDo adds new ToDoItem to the given toDo',()=>{
+  describe('deleteItemInToDo',()=>{
+    it('deleteItemInToDo adds new ToDoItem to the given toDo',()=>{
       let ishu = new User("Ishu",1);
       ishu.addToDo("wash cloth");
-      ishu.deleteToDoItemInToDo(0,0);
+      ishu.deleteItemInToDo(0,0);
       assert.deepEqual(ishu.toDos[0].toDoItems,[]);
     })
   })
-  describe('editToDoItemInToDo',()=>{
-    it('editToDoItemInToDo sets new value to the toDoItem in given toDo',()=>{
+  describe('editItemInToDo',()=>{
+    it('editItemInToDo sets new value to the toDoItem in given toDo',()=>{
       let ishu = new User("Ishu",1);
       let toDoItems =[{itemText:"bring dirty clothes",id:0,status:false}];
       ishu.addToDo("wash cloth");
-      ishu.addToDoItemInToDo(0,'bring dirty kapde');
-      ishu.editToDoItemInToDo(0,0,'bring dirty clothes')
+      ishu.addItemInToDo(0,'bring dirty kapde');
+      ishu.editItemInToDo(0,0,'bring dirty clothes')
       assert.deepEqual(ishu.toDos[0].toDoItems,toDoItems);
     })
   })
@@ -100,7 +100,7 @@ describe('User',()=>{
       let ishu = new User("Ishu",1);
       let toDoItems =[{itemText:"bring dirty clothes",id:0,status:true}];
       ishu.addToDo("wash cloth");
-      ishu.addToDoItemInToDo(0,'bring dirty clothes');
+      ishu.addItemInToDo(0,'bring dirty clothes');
       ishu.markToDoItemAsDone(0,0);
       assert.deepEqual(ishu.toDos[0].toDoItems,toDoItems);
     })
@@ -110,7 +110,7 @@ describe('User',()=>{
       let ishu = new User("Ishu",1);
       let toDoItems =[{itemText:"bring dirty clothes",id:0,status:false}];
       ishu.addToDo("wash cloth");
-      ishu.addToDoItemInToDo(0,'bring dirty clothes');
+      ishu.addItemInToDo(0,'bring dirty clothes');
       ishu.markToDoItemAsUndone(0,0);
       assert.deepEqual(ishu.toDos[0].toDoItems,toDoItems);
     })
