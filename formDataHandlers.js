@@ -24,7 +24,6 @@ lib.getToDoFormat = ()=> {
   return fs.readFileSync('./public/toDoFormat.html','utf8');
 }
 
-
 lib.isTodoOfSameUser = (toDoList,toDoID) => {
   return toDoList.some(function(toDo) {
     return toDo.id == toDoID;
@@ -34,7 +33,6 @@ lib.isTodoOfSameUser = (toDoList,toDoID) => {
 lib.getPreviousToDo = (username,toDoID) => {
   let user = getUserData(username);
   if (lib.isTodoOfSameUser(user.toDos,toDoID)) {
-    console.log("ishu");
     let toDo = toDoApp.getUserTodo(username,toDoID);
     return lib.displayToDo(toDo);
   }
@@ -61,12 +59,19 @@ lib.displayHomePage = (username) =>{
 
 lib.displayToDo = (userInfo)=>{
   let toDoFormat = lib.getToDoFormat();
+  let toDoItems = lib.displayToDoItem(userInfo.toDoItems);
   let toDoWithTitle = toDoFormat.replace("<titl>",userInfo.title);
   let toDoWithDes = toDoWithTitle.replace('<des>',userInfo.description);
-  let toDoWithItem = toDoWithDes.replace('<item>',userInfo.item);
+  let toDoWithItem = toDoWithDes.replace('<item>',toDoItems);
   return toDoWithItem;
 }
 
+lib.displayToDoItem = (toDoItems) =>{
+  let items=toDoItems.map(function(toDoItem){
+    return `<br>${toDoItem.itemText}<br>`
+  })
+  return items.join("\n")
+}
 
 lib.storeTheUserTODOs = (username,newInfo) =>{
   let toDoItems = newInfo.item;

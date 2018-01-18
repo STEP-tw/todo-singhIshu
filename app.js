@@ -23,6 +23,12 @@ let loadUser = (req,res)=>{
   }
 };
 
+let displayToDo = (req,res) => {
+  if (req.user) {
+    lib.displayUserToDo(req,res);
+  }
+}
+
 let redirectLoggedInUserToLogin = (req,res)=>{
   if(req.urlIsOneOf(['/logout','/home','/toDoForm.html']) & !req.user) res.redirect('/index.html');
 };
@@ -35,6 +41,7 @@ let redirectLoggedOutUserToLogin = (req,res)=>{
 let app = WebApp.create();
 app.use(logRequest);
 app.use(loadUser);
+app.use(displayToDo);
 app.use(redirectLoggedInUserToLogin);
 app.use(redirectLoggedOutUserToLogin);
 app.get('/',(req,res)=>{
