@@ -24,48 +24,23 @@ lib.getToDoFormat = ()=> {
   return fs.readFileSync('./public/toDoFormat.html','utf8');
 }
 
-lib.isSameTitleAndUser = (toDo,title,username) => {
-  return toDo.title == title && toDo.username == username;
-}
 
-lib.isATitleOfSameUser = (toDoList,title,username) => {
+lib.isTodoOfSameUser = (toDoList,toDoID) => {
   return toDoList.some(function(toDo) {
-    return lib.isSameTitleAndUser(toDo,title,username);
+    return toDo.id == toDoID;
   })
 }
 
-lib.displayToDo = (title,username) => {
-  let toDoList = lib.getToDoDataBase();
-  if (lib.isATitleOfSameUser(toDoList,title,username)) {
-    return username;
+lib.getPreviousToDo = (username,toDoID) => {
+  let user = getUserData(username);
+  if (lib.isTodoOfSameUser(user.toDos,toDoID)) {
+    console.log("ishu");
+    let toDo = toDoApp.getUserTodo(username,toDoID);
+    return lib.displayToDo(toDo);
   }
   return;
 }
 
-lib.getPreviousToDo = (title,username) => {
-  let toDoLists = lib.getToDoDataBase();
-  for (var index = 0; index < toDoLists.length; index++) {
-    if (lib.isSameTitleAndUser(toDoLists[index],title,username)) {
-      return lib.displayToDo(toDoLists[index]);
-    }
-    return;
-  }
-}
-
-lib.displayPreviousToDo = (title,userName) => {
-  let toDoList = lib.getToDoDataBase();
-  if (lib.isATitleOfSameUser(toDoList,title,userName)) {
-    return lib.getPreviousToDo(title,userName);
-  }
-  return;
-}
-
-
-lib.getTheUserToDos = (userName,userDataBase) => {
-  return userDataBase.filter(function(toDo) {
-    return toDo.username = userName;
-  })
-}
 
 lib.getToDoMade = (toDoList)=> {
   let toDos=toDoList.map(function(toDo){

@@ -19,6 +19,14 @@ pageLib.handleGetMainPage = (req,res) =>{
   res.end();
 }
 
+pageLib.displayUserToDo = (req,res) =>{
+  let username = req.user.username;
+  let toDoPage = lib.getPreviousToDo(username,req.url);
+  res.setHeader('Content-type','text/html');
+  res.write(toDoPage);
+  res.end();
+}
+
 pageLib.handleHomePage = (req,res) => {
   let userHomePage = lib.displayHomePage(req.user.username);
   res.write(userHomePage);

@@ -6,7 +6,7 @@ describe('ToDo',()=>{
   describe('new ToDo()',()=>{
     it('tests that the toDo has title and description or not',()=>{
       let expected = {title:"make tea",id:1,description:"make ginger tea",counter:0,toDoItems:[]};
-      let toDo = new ToDo("make tea",1,"make ginger tea",);
+      let toDo = new ToDo("make tea",1,"make ginger tea");
       assert.deepEqual(expected,toDo);
     })
   })
