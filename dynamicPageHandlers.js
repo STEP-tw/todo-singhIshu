@@ -31,7 +31,6 @@ pageLib.handleGetMainPage = (req,res) =>{
 
 pageLib.handleHomePage = (req,res) => {
   let userData = getUserData(req.user.username);
-  console.log(userData);
   let userHomePage = lib.displayHomePage(userData);
   res.write(userHomePage);
   res.end();
