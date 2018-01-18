@@ -3,8 +3,12 @@ const lib = require('./formDataHandlers.js');
 const ToDoApp = require('./model/toDoApp.js');
 
 let toDoApp = new ToDoApp();
-toDoApp.addUser('ishusi');
-toDoApp.addUser('ponu');
+toDoApp.addUser('ishusi',0);
+toDoApp.addUser('ponu',1);
+
+const getUserData = (username) =>{
+  return toDoApp.users[username];
+}
 
 const getLoginPage = (req,res)=>{
   return fs.readFileSync('./public/index.html','utf8');
@@ -26,7 +30,9 @@ pageLib.handleGetMainPage = (req,res) =>{
 }
 
 pageLib.handleHomePage = (req,res) => {
-  let userHomePage = lib.displayHomePage(req.user);
+  let userData = getUserData(req.user.username);
+  console.log(userData);
+  let userHomePage = lib.displayHomePage(userData);
   res.write(userHomePage);
   res.end();
 }

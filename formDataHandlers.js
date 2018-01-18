@@ -66,17 +66,17 @@ lib.getToDoMade = (toDoList)=> {
 
 lib.displayHomePage = (userInfo) => {
   let homePageFormat = lib.getHomePageFormat();
-  let toDoDataBase = lib.getToDoDataBase();
-  let userToDos = lib.getTheUserToDos(userInfo.username,toDoDataBase)
+  let userToDos = lib.getTheUserToDos(userInfo.username,toDoDataBase);
   if(userToDos.length == 0){
     let homeWithUserName = homePageFormat.replace("UserName",userInfo.name);
     return homeWithUserName;
   }
   let userMadeToDos = lib.getToDoMade(userToDos);
-  let homeWithUserName = homePageFormat.replace("UserName",userInfo.name);
+  let homeWithUserName = homePageFormat.replace("UserName",userInfo.username);
   let homeWithToDoLists = homeWithUserName.replace("toDoMade",userMadeToDos);
   return homeWithToDoLists;
 }
+
 
 lib.displayToDo = (userInfo)=>{
   let toDoFormat = lib.getToDoFormat();

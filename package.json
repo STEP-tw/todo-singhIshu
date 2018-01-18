@@ -1,16 +1,28 @@
 {
-  "name": "toDo app",
-  "version": "0.0.1",
-  "description": "App that will help users to build their own toDos",
-  "main": "src/index.js",
+  "name": "todo-singhishu",
+  "version": "1.0.0",
+  "description": "ToDo app that helps user to maintain and manage todos.",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
   "dependencies": {},
   "devDependencies": {
     "chai": "^4.1.2",
-    "mocha": "^3.4.2"
+    "mocha": "^5.0.0"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
-  "author": "",
-  "license": "Apache 2.0"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/STEP-tw/todo-singhIshu.git"
+  },
+  "author": "Ishu Singh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/STEP-tw/todo-singhIshu/issues"
+  },
+  "homepage": "https://github.com/STEP-tw/todo-singhIshu#readme"
 }
