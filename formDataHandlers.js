@@ -1,4 +1,14 @@
 const fs = require('fs');
+const ToDoApp = require('./model/toDoApp.js');
+
+let toDoApp = new ToDoApp();
+toDoApp.addUser('ishusi',0);
+toDoApp.addUser('ponu',1);
+
+const getUserData = (username) =>{
+  return toDoApp.users[username];
+}
+
 let lib = {};
 
 lib.getToDoDataBase = () => {
@@ -59,16 +69,17 @@ lib.getTheUserToDos = (userName,userDataBase) => {
 
 lib.getToDoMade = (toDoList)=> {
   let toDos=toDoList.map(function(toDo){
-    return `<a href="${toDo.title}">${toDo.title}</a>`
+    return `<a href="${toDo.id}">${toDo.title}</a>`
   })
   return toDos.join("\n")
 }
 
 
-lib.displayHomePage = (userInfo) =>{
+lib.displayHomePage = (username) =>{
+  let userData = getUserData(username);
   let homePageFormat = lib.getHomePageFormat();
-  let userMadeToDos = lib.getToDoMade(userInfo.toDos);
-  let homeWithUserName = homePageFormat.replace("UserName",userInfo.username);
+  let userMadeToDos = lib.getToDoMade(userData.toDos);
+  let homeWithUserName = homePageFormat.replace("UserName",userData.username);
   let homeWithToDoLists = homeWithUserName.replace("toDoMade",userMadeToDos);
   return homeWithToDoLists;
 }
@@ -81,12 +92,14 @@ lib.displayToDo = (userInfo)=>{
   return toDoWithItem;
 }
 
-lib.storeTheUserTODOs = (userInfo,userTodo) =>{
-  let userDatas = lib.getToDoDataBase();
-  let newTodo = userTodo;
-  newTodo.username = userInfo.username;
-  userDatas.push(newTodo);
-  fs.writeFileSync("./userDataBase.json",JSON.stringify(userDatas,null,2));
+
+lib.storeTheUserTODOs = (username,newInfo) =>{
+  let toDoItems = newInfo.item;
+  let toDo = toDoApp.addToDoForUser(username,newInfo.title,newInfo.description);
+  for (var i = 0; i < toDoItems.length; i++) {
+    toDoApp.addNewToDoItem(username,toDo.id,toDoItems[i]);
+  }
+  return ToDoApp;
 }
 
 

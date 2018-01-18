@@ -2,11 +2,21 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <script type="text/javascript">
+    const addItemBox = function() {
+      let toDoForm = document.getElementById('form');
+      let itemBox =document.createElement('input');
+      let breakLine =document.createElement('br');
+      itemBox.name = "item"
+      toDoForm.appendChild(itemBox);
+      toDoForm.appendChild(breakLine);
+    }
+    </script>
   </head>
   <body>
     <h1>New ToDo</h1>
     <hr>
-    <form method="post">
+    <form method="post" id="form">
         Title:
         <input type="text" name="title" value="">
         <br>
@@ -15,14 +25,11 @@
         <input type="text" name="description" value="">
         <br>
         <br>
-        ToDo Items:
-        <br>
-        <textarea name="item" rows="8" cols="80" required></textarea>
-        <br>
         <br>
         <input type="submit" value="Submit">
         <br>
         <br>
+        <button type="button" name="button" onclick="addItemBox()">Add ToDoItem</button>
     </form>
     <a href="/logout"><button>Logout</button></a>
   </body>

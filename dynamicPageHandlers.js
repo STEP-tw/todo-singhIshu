@@ -1,15 +1,5 @@
 const fs = require('fs');
 const lib = require('./formDataHandlers.js');
-const ToDoApp = require('./model/toDoApp.js');
-
-let toDoApp = new ToDoApp();
-toDoApp.addUser('ishusi',0);
-toDoApp.addUser('ponu',1);
-
-const getUserData = (username) =>{
-  return toDoApp.users[username];
-}
-
 const getLoginPage = (req,res)=>{
   return fs.readFileSync('./public/index.html','utf8');
 }
@@ -30,8 +20,7 @@ pageLib.handleGetMainPage = (req,res) =>{
 }
 
 pageLib.handleHomePage = (req,res) => {
-  let userData = getUserData(req.user.username);
-  let userHomePage = lib.displayHomePage(userData);
+  let userHomePage = lib.displayHomePage(req.user.username);
   res.write(userHomePage);
   res.end();
 }
@@ -50,9 +39,9 @@ pageLib.viewPreviousTodo = (req,res) => {
 }
 
 pageLib.handlePostNewTodo = (req,res) => {
-  lib.storeTheUserTODOs(req.user,req.body);
-  let toDoPage = lib.displayToDo(req.body);
-  res.write(toDoPage);
+  let username =  req.user.username;
+  lib.storeTheUserTODOs(username,req.body);
+  res.redirect('/home');
   res.end();
 }
 

@@ -9,6 +9,7 @@ class User {
   addToDo(title,description){
     let newToDo = new ToDo(title,this.counter++,description);
     this.toDos.push(newToDo);
+    return newToDo;
   }
   getToDo(toDoID){
     return this.toDos.find((toDo)=>{

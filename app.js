@@ -2,7 +2,7 @@ let fs = require('fs');
 const http = require('http');
 const WebApp = require('./webapp');
 const lib = require('./dynamicPageHandlers.js');
-let registered_users = [{username:'bhanutv',name:'Bhanu Teja Verma'},{username:'ishusi',name:'Ishu Singh'}];
+let registered_users = [{username:'ponu',name:'Prateek Kumar Singh'},{username:'ishusi',name:'Ishu Singh'}];
 let toS = o=>JSON.stringify(o,null,2);
 
 

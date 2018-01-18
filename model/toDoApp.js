@@ -11,7 +11,7 @@ class ToDoApp {
   }
   addToDoForUser(username,title,description){
     let user = this.users[username];
-    user.addToDo(title,description);
+    return user.addToDo(title,description);
   }
   getUserTodo(username,toDoID){
     let user = this.users[username];
