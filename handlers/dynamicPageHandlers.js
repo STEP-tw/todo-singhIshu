@@ -1,7 +1,8 @@
 const fs = require('fs');
 const lib = require('./formDataHandlers.js');
 const getLoginPage = (req,res)=>{
-  return fs.readFileSync('./public/index.html','utf8');
+  let fileName = './public/index.html';
+  return fs.readFileSync(fileName,'utf8');
 }
 
 let pageLib = {};
@@ -52,7 +53,7 @@ pageLib.viewPreviousTodo = (req,res) => {
 
 pageLib.handlePostNewTodo = (req,res) => {
   let username =  req.user.username;
-  lib.storeTheUserTODOs(username,req.body);
+  lib.storeNewTodo(username,req.body);
   res.redirect('/home');
   res.end();
 }

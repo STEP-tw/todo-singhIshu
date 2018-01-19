@@ -1,5 +1,5 @@
 const fs = require('fs');
-const ToDoApp = require('./model/toDoApp.js');
+const ToDoApp = require('../model/toDoApp.js');
 
 let toDoApp = new ToDoApp();
 toDoApp.addUser('ishusi',0);
@@ -12,7 +12,7 @@ const getUserData = (username) =>{
 let lib = {};
 
 lib.getToDoDataBase = () => {
-  let userInfoList = fs.readFileSync('./userDataBase.json','utf8');
+  let userInfoList = fs.readFileSync('../userDataBase.json','utf8');
   return JSON.parse(userInfoList);
 }
 
@@ -78,12 +78,22 @@ lib.displayToDoItem = (toDoItems) =>{
   return items.join("\n")
 }
 
-lib.storeTheUserTODOs = (username,newInfo) =>{
-  let toDoItems = newInfo.item;
-  let toDo = toDoApp.addToDoForUser(username,newInfo.title,newInfo.description);
-  for (var i = 0; i < toDoItems.length; i++) {
-    toDoApp.addNewToDoItem(username,toDo.id,toDoItems[i]);
+lib.extractItems = (toDoContents)=> {
+  let toDoItems = [];
+  for (var item in toDoContents) {
+    if (item.startsWith('item')) {
+      toDoItems.push(toDoContents[item]);
+    }
   }
+  return toDoItems;
+}
+
+lib.storeNewTodo = (username,toDoData) =>{
+  let toDoItems = lib.extractItems(toDoData)
+  let toDo = toDoApp.addToDoForUser(username,toDoData.title,toDoData.description);
+  toDoItems.forEach(function(item) {
+    toDoApp.addNewToDoItem(username,toDo.id,item);
+  });
   return ToDoApp;
 }
 

@@ -1,7 +1,7 @@
 let chai = require('chai');
 let assert = chai.assert;
 let request = require('./requestSimulator.js');
-let app = require('../server.js');
+let app = require('../app.js');
 let th = require('./testHelper.js');
 
 describe('app',()=>{
@@ -64,14 +64,6 @@ describe('app',()=>{
       request(app,{method:'POST',url:'/index',body:'username=badUser'},res=>{
         th.should_be_redirected_to(res,'/index');
         th.should_have_expiring_cookie(res,'message','login failed');
-        done();
-      })
-    })
-  })
-  describe('GET /toDoForm',()=>{
-    it('redirects to /',done=>{
-      request(app,{method:'POST',url:'/index',body:'username=badUser'},res=>{
-        th.should_be_redirected_to(res,'/index');
         done();
       })
     })
