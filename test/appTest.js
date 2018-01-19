@@ -22,6 +22,14 @@ describe('app',()=>{
       })
     })
   })
+  describe('POST /',()=>{
+    it('responds with 404',done=>{
+      request(app,{method:'POST',url:'/'},(res)=>{
+        assert.equal(res.statusCode,404);
+        done();
+      })
+    })
+  })
   describe('GET /index',()=>{
     it('gives the index page',done=>{
       request(app,{method:'GET',url:'/index'},res=>{
@@ -31,6 +39,7 @@ describe('app',()=>{
       })
     })
   })
+
   describe('GET /index',()=>{
     it('serves the index page with login',done=>{
       request(app,{method:'GET',url:'/index'},res=>{
@@ -52,7 +61,7 @@ describe('app',()=>{
     })
   })
 
-  describe('POST /login',()=>{
+  describe('POST /index',()=>{
     it('redirects to homepage for valid user',done=>{
       request(app,{method:'POST',url:'/index',body:'username=ishusi'},res=>{
         th.should_be_redirected_to(res,'/home');
@@ -67,5 +76,22 @@ describe('app',()=>{
         done();
       })
     })
+    it('redirects to login with message for empty username',done=>{
+      request(app,{method:'POST',url:'/index',body:'username='},res=>{
+        th.should_be_redirected_to(res,'/index');
+        th.should_have_expiring_cookie(res,'message','login failed');
+        done();
+      })
+    })
   })
+
+  describe('GET /home',()=>{
+    it('should redirect to index page if the user is not logged in',done=>{
+      request(app,{method:'GET',url:'/home'},res=>{
+        th.should_be_redirected_to(res,'/index');
+        done();
+      })
+    })
+  })
+
 })

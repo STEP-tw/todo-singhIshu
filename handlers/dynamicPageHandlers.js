@@ -21,8 +21,7 @@ pageLib.handleGetMainPage = (req,res) =>{
 }
 
 pageLib.displayUserToDo = (req,res) =>{
-  let username = req.user.username;
-  let toDoPage = lib.getPreviousToDo(username,req.url.slice(1));
+  let toDoPage = lib.getPreviousToDo(req.user,req.url.slice(1));
   if (toDoPage == undefined) {
     return;
   }
@@ -65,7 +64,8 @@ pageLib.handleLogoutPage = function(req,res) {
 
 pageLib.deleteToDo = (req,res)=>{
   let username = req.user.username;
-  lib.deleteToDo(username,req.url.slice(1));
+  let todoID = req.user.todoID;
+  lib.deleteToDo(username,todoID);
   res.redirect('/home');
 }
 

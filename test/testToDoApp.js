@@ -113,8 +113,11 @@ describe('ToDoApp',()=>{
       let expectedToDoItems = {itemText:"get a cup of water",id:0,status:false};
       let toDoApp = new ToDoApp();
       toDoApp.addUser('ishu',12);
+      toDoApp.addUser('dhanu',12);
       toDoApp.addToDoForUser('ishu','make Coffee','light coffee');
-      toDoApp.deleteToDoItem('ishu',0,0);
+      toDoApp.addToDoForUser('ishu','make Coffee','light coffee');
+      toDoApp.addToDoForUser('dhanu','make Coffee','light coffee');
+      toDoApp.deleteToDoItem('ishu',0,1);
       let toDoItem = toDoApp.getToDoItemFrom('ishu',0,0);
       assert.deepEqual(toDoItem,undefined);
     })

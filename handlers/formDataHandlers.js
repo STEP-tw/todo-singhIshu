@@ -30,10 +30,12 @@ lib.isTodoOfSameUser = (toDoList,toDoID) => {
   })
 }
 
-lib.getPreviousToDo = (username,toDoID) => {
-  let user = getUserData(username);
-  if (lib.isTodoOfSameUser(user.toDos,toDoID)) {
-    let toDo = toDoApp.getUserTodo(username,toDoID);
+lib.getPreviousToDo = (user,toDoID) => {
+  let username = user.username;
+  let userInfo = getUserData(username);
+  if (lib.isTodoOfSameUser(userInfo.toDos,toDoID)) {
+    user.todoID = toDoID;
+    let toDo = toDoApp.getUserTodo(username,user.todoID);
     return lib.displayToDo(toDo);
   }
   return;

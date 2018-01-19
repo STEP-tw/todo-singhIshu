@@ -30,12 +30,31 @@ let displayToDo = (req,res) => {
 }
 
 let redirectLoggedInUserToLogin = (req,res)=>{
-  if(req.urlIsOneOf(['/logout','/home','/toDoForm']) & !req.user) res.redirect('/index');
+  if(req.urlIsOneOf(['/logout','/home','/toDoForm'])  && !req.user) res.redirect('/index');
 };
 
 let redirectLoggedOutUserToLogin = (req,res)=>{
   if(req.urlIsOneOf(['/logout']) && req.user) res.redirect('/index');
 };
+
+let getTodoForm = (req,res)=>{
+  res.setHeader('Content-type','text/html');
+  res.write(fs.readFileSync('./public/toDoForm.html'));
+  res.end();
+}
+
+let processPostLogin =(req,res)=>{
+  let user = registered_users.find(u=>u.username==req.body.username);
+  if(!user) {
+    res.setHeader('Set-Cookie','message=login failed; Max-Age=5');
+    res.redirect("/index");
+    return;
+  }
+  let sessionid = new Date().getTime();
+  res.setHeader('Set-Cookie',`sessionid=${sessionid}`);
+  user.sessionid = sessionid;
+  res.redirect('/home');
+}
 
 
 let app = WebApp.create();
@@ -50,24 +69,9 @@ app.get('/',(req,res)=>{
 
 app.get('/index',lib.handleGetMainPage);
 
-app.post('/index',(req,res)=>{
-  let user = registered_users.find(u=>u.username==req.body.username);
-  if(!user) {
-    res.setHeader('Set-Cookie','message=login failed; Max-Age=5');
-    res.redirect("/index");
-    return;
-  }
-  let sessionid = new Date().getTime();
-  res.setHeader('Set-Cookie',`sessionid=${sessionid}`);
-  user.sessionid = sessionid;
-  res.redirect('/home');
-})
+app.post('/index',processPostLogin);
 
-app.get('/toDoForm',(req,res)=>{
-  res.setHeader('Content-type','text/html');
-  res.write(fs.readFileSync('./public/toDoForm.html'));
-  res.end();
-})
+app.get('/toDoForm',getTodoForm);
 
 app.get('/home',lib.handleHomePage);
 app.post('/toDoForm',lib.handlePostNewTodo);
