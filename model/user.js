@@ -28,6 +28,7 @@ class User {
   deleteToDo(toDoID){
     let toDo = this.getToDo(toDoID);
     let toDoIndex = this.toDos.indexOf(toDo);
+    console.log(toDoIndex);
     this.toDos.splice(toDoIndex,1);
   }
   editTitleOfToDo(toDoID,newTitle){

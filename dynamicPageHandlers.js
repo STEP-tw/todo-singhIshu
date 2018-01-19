@@ -38,7 +38,7 @@ pageLib.handleHomePage = (req,res) => {
 }
 
 pageLib.isAUserAndNotAStaticPage = (req) =>{
-  let staticPages = ['/home','/index.html'];
+  let staticPages = ['/home','/index'];
   return req.user && !staticPages.includes(req.url);
 }
 
@@ -59,7 +59,13 @@ pageLib.handlePostNewTodo = (req,res) => {
 
 pageLib.handleLogoutPage = function(req,res) {
   delete req.user.sessionid;
-  res.redirect('index.html');
+  res.redirect('/index');
+}
+
+pageLib.deleteToDo = (req,res)=>{
+  let username = req.user.username;
+  lib.deleteToDo(username,req.url.slice(1));
+  res.redirect('/home');
 }
 
 

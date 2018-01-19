@@ -30,11 +30,11 @@ let displayToDo = (req,res) => {
 }
 
 let redirectLoggedInUserToLogin = (req,res)=>{
-  if(req.urlIsOneOf(['/logout','/home','/toDoForm.html']) & !req.user) res.redirect('/index.html');
+  if(req.urlIsOneOf(['/logout','/home','/toDoForm']) & !req.user) res.redirect('/index');
 };
 
 let redirectLoggedOutUserToLogin = (req,res)=>{
-  if(req.urlIsOneOf(['/logout']) && req.user) res.redirect('/index.html');
+  if(req.urlIsOneOf(['/logout']) && req.user) res.redirect('/index');
 };
 
 
@@ -45,16 +45,16 @@ app.use(displayToDo);
 app.use(redirectLoggedInUserToLogin);
 app.use(redirectLoggedOutUserToLogin);
 app.get('/',(req,res)=>{
-  res.redirect('/index.html');
+  res.redirect('/index');
 });
 
-app.get('/index.html',lib.handleGetMainPage);
+app.get('/index',lib.handleGetMainPage);
 
-app.post('/index.html',(req,res)=>{
+app.post('/index',(req,res)=>{
   let user = registered_users.find(u=>u.username==req.body.username);
   if(!user) {
     res.setHeader('Set-Cookie','message=login failed; Max-Age=5');
-    res.redirect("/index.html");
+    res.redirect("/index");
     return;
   }
   let sessionid = new Date().getTime();
@@ -63,9 +63,16 @@ app.post('/index.html',(req,res)=>{
   res.redirect('/home');
 })
 
+app.get('/toDoForm',(req,res)=>{
+  res.setHeader('Content-type','text/html');
+  res.write(fs.readFileSync('./public/toDoForm.html'));
+  res.end();
+})
+
 app.get('/home',lib.handleHomePage);
-app.post('/toDoForm.html',lib.handlePostNewTodo);
+app.post('/toDoForm',lib.handlePostNewTodo);
 app.get('/logout',lib.handleLogoutPage);
+app.get('/delete',lib.deleteToDo);
 
 
 module.exports = app;

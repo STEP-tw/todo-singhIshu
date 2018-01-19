@@ -40,6 +40,11 @@ lib.getPreviousToDo = (username,toDoID) => {
 }
 
 
+lib.deleteToDo = (username,toDoID) => {
+  toDoApp.deleteTodoList(username,toDoID);
+}
+
+
 lib.getToDoMade = (toDoList)=> {
   let toDos=toDoList.map(function(toDo){
     return `<a href="${toDo.id}">${toDo.title}</a>`
@@ -80,6 +85,20 @@ lib.storeTheUserTODOs = (username,newInfo) =>{
     toDoApp.addNewToDoItem(username,toDo.id,toDoItems[i]);
   }
   return ToDoApp;
+}
+
+
+lib.replaceValue = (replacewith,name,content) =>{
+  return content.replace(`<input type="text" name="${name}" value="">`,
+  `<input type="text" name="${name}" value="${content}">`);
+}
+
+
+lib.getEditForm = (username,toDoID) =>{
+  let editForm = fs.readFileSync('./public/toDoForm.html','utf8');
+  let todo = toDoApp.getUserTodo(username,toDoID);
+  editForm = lib.replaceValue(todo.title,'title',editForm);
+  return lib.replaceValue(todo.description,'description',editForm);
 }
 
 
