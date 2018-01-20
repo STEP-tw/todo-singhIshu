@@ -7,6 +7,11 @@ let getLoginHandler = new GetLoginHandler(fs,'./public/login.html');
 let registered_users = [{username:'ponu',name:'Prateek Kumar Singh'},{username:'ishusi',name:'Ishu Singh'}];
 let toS = o=>JSON.stringify(o,null,2);
 
+const processGetLogin= function(req,res) {
+  let loginPageContents = fs.readFileSync('./public/login.html','utf8');
+  let getLoginHandler = new GetLoginHandler(loginPageContents);
+  return getLoginHandler.getRequestHandler();
+}
 
 let logRequest = (req,res)=>{
   let text = ['--------------------------',
@@ -69,7 +74,7 @@ app.get('/',(req,res)=>{
   res.redirect('/login');
 });
 
-app.get('/login',getLoginHandler.getRequestHandler());
+app.get('/login',processGetLogin());
 
 app.post('/login',processPostLogin);
 

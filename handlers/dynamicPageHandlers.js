@@ -13,13 +13,6 @@ const isATitleOfSameUser = (toDoList,title,username) => {
     return lib.isSameTitleAndUser(toDo,title,username);
   })
 }
-// 
-// pageLib.handleGetLoginPage = (req,res) =>{
-//   let loginPage = getLoginPage();
-//   res.setHeader('Content-type','text/html');
-//   res.write(loginPage.replace("<h2></h2>",req.cookies.message || ""));
-//   res.end();
-// }
 
 pageLib.displayTodo = (req,res) =>{
   let toDoPage = lib.getPreviousToDo(req.user,req.url.slice(1));

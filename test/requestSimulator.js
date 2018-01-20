@@ -9,14 +9,19 @@ let request = function(app,options,onComplete){
   req.cookies = options.cookies;
   req.headers = options.headers||{};
   req.body = options.body;
-  console.log(req.headers);
+
   let res={
     end:()=>{
       res.finished = true;
       let result = {
         statusCode:res.statusCode||200,
         headers:res_headers,
-        body:res_contents
+        body:res_contents,
+        redirect: function(path){
+          this.statusCode = 302;
+          this.setHeader('location',path);
+          this.end();
+        }
       };
       onComplete(result);
     },
