@@ -15,7 +15,7 @@ const isATitleOfSameUser = (toDoList,title,username) => {
 }
 
 pageLib.displayTodo = (req,res) =>{
-  let toDoPage = lib.getPreviousToDo(req.user,req.url.slice(1));
+  let toDoPage = lib.getToDo(req.user,req.url.slice(1));
   if (toDoPage == undefined) {
     return;
   }
@@ -32,6 +32,7 @@ pageLib.handleHomePage = (req,res) => {
 }
 
 pageLib.handlePostNewTodo = (req,res) => {
+  console.log(req.body);
   let username =  req.user.username;
   lib.storeNewTodo(username,req.body);
   res.redirect('/home');

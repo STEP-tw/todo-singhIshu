@@ -10,9 +10,10 @@
       let checkbox =document.createElement('input');
       let breakLine =document.createElement('br');
       checkbox.type = "checkbox";
-      checkbox.name = `check${counter++}`;
+      checkbox.name = `check${counter}`;
       itemBox.name = `item${counter++}`;
       toDoForm.appendChild(itemBox);
+      toDoForm.appendChild(checkbox);
       toDoForm.appendChild(breakLine);
     }
     </script>

@@ -11,11 +11,6 @@ const getUserData = (username) =>{
 
 let lib = {};
 
-lib.getToDoDataBase = () => {
-  let userInfoList = fs.readFileSync('../userDataBase.json','utf8');
-  return JSON.parse(userInfoList);
-}
-
 lib.getHomePageFormat = ()=>{
   return fs.readFileSync('./public/homePage.html','utf8');
 }
@@ -30,7 +25,7 @@ lib.isTodoOfSameUser = (toDoList,toDoID) => {
   })
 }
 
-lib.getPreviousToDo = (user,toDoID) => {
+lib.getToDo = (user,toDoID) => {
   let username = user.username;
   let userInfo = getUserData(username);
   if (lib.isTodoOfSameUser(userInfo.toDos,toDoID)) {
@@ -47,7 +42,7 @@ lib.deleteToDo = (username,toDoID) => {
 }
 
 
-lib.getToDoMade = (toDoList)=> {
+lib.getLinksOfTodos = (toDoList)=> {
   let toDos=toDoList.map(function(toDo){
     return `<a href="${toDo.id}">${toDo.title}</a>`
   })
@@ -58,22 +53,22 @@ lib.getToDoMade = (toDoList)=> {
 lib.getHomePage = (username) =>{
   let userData = getUserData(username);
   let homePageFormat = lib.getHomePageFormat();
-  let userMadeToDos = lib.getToDoMade(userData.toDos);
+  let userToDos = lib.getLinksOfTodos(userData.toDos);
   let homeWithUserName = homePageFormat.replace("UserName",userData.username);
-  let homeWithToDoLists = homeWithUserName.replace("toDoMade",userMadeToDos);
+  let homeWithToDoLists = homeWithUserName.replace("toDoMade",userToDos);
   return homeWithToDoLists;
 }
 
 lib.displayToDo = (userInfo)=>{
   let toDoFormat = lib.getToDoFormat();
-  let toDoItems = lib.displayToDoItem(userInfo.toDoItems);
+  let toDoItems = lib.getTodoItemsInHTML(userInfo.toDoItems);
   let toDoWithTitle = toDoFormat.replace("<titl>",userInfo.title);
   let toDoWithDes = toDoWithTitle.replace('<des>',userInfo.description);
   let toDoWithItem = toDoWithDes.replace('<item>',toDoItems);
   return toDoWithItem;
 }
 
-lib.displayToDoItem = (toDoItems) =>{
+lib.getTodoItemsInHTML = (toDoItems) =>{
   let items=toDoItems.map(function(toDoItem){
     return `<br>${toDoItem.itemText}<br>`
   })
@@ -96,7 +91,6 @@ lib.storeNewTodo = (username,toDoData) =>{
   toDoItems.forEach(function(item) {
     toDoApp.addNewToDoItem(username,toDo.id,item);
   });
-  return ToDoApp;
 }
 
 
@@ -109,7 +103,6 @@ lib.replaceValue = (replacewith,name,content) =>{
 lib.getEditForm = (username,toDoID) =>{
   let editForm = fs.readFileSync('./public/toDoForm.html','utf8');
   let todo = toDoApp.getUserTodo(username,toDoID);
-  console.log(todo);
   editForm = lib.replaceValue(todo.title,'title',editForm);
   return lib.replaceValue(todo.description,'description',editForm);
 }
