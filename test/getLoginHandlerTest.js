@@ -6,7 +6,7 @@ let th = require('./testHelper.js');
 let GetLoginHandler = require('../handlers/getLoginHandler.js');
 
 
-describe('GetLoginHandler()',()=>{
+describe.skip('GetLoginHandler()',()=>{
   let getLoginHandler = {};
   beforeEach(function(){
     getLoginHandler = new GetLoginHandler('welcome to loginPage<h2></h2>');

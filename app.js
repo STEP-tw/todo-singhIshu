@@ -4,7 +4,7 @@ const WebApp = require('./webapp');
 const GetLoginHandler = require('./handlers/getLoginHandler.js');
 const lib = require('./handlers/dynamicPageHandlers.js');
 let getLoginHandler = new GetLoginHandler(fs,'./public/login.html');
-let registered_users = [{username:'ponu',name:'Prateek Kumar Singh'},{username:'ishusi',name:'Ishu Singh'}];
+let registered_users = [{username:'ponu',name:'Prateek Kumar Singh',sessionid:0},{username:'ishusi',name:'Ishu Singh',sessionid:1}];
 let toS = o=>JSON.stringify(o,null,2);
 
 const processGetLogin= function(req,res) {
@@ -36,12 +36,12 @@ let displayToDo = (req,res) => {
   }
 }
 
-let redirectLoggedInUserToLogin = (req,res)=>{
-  if(req.urlIsOneOf(['/logout','/home','/toDoForm'])  && !req.user) res.redirect('/login');
+let redirectUnloggedUserToLogin = (req,res)=>{
+  if(req.urlIsOneOf(['/logout','/home','/toDoForm','/delete'])  && !req.user) res.redirect('/login');
 };
 
-let redirectLoggedOutUserToLogin = (req,res)=>{
-  if(req.urlIsOneOf(['/logout']) && req.user) res.redirect('/login');
+let redirectLoggedInUserToHome = (req,res)=>{
+  if(req.urlIsOneOf(['/login']) && req.user) res.redirect('/home');
 };
 
 let getTodoForm = (req,res)=>{
@@ -68,8 +68,8 @@ let app = WebApp.create();
 app.use(logRequest);
 app.use(loadUser);
 app.use(displayToDo);
-app.use(redirectLoggedInUserToLogin);
-app.use(redirectLoggedOutUserToLogin);
+app.use(redirectUnloggedUserToLogin);
+app.use(redirectLoggedInUserToHome);
 app.get('/',(req,res)=>{
   res.redirect('/login');
 });

@@ -32,7 +32,6 @@ pageLib.handleHomePage = (req,res) => {
 }
 
 pageLib.handlePostNewTodo = (req,res) => {
-  console.log(req.body);
   let username =  req.user.username;
   lib.storeNewTodo(username,req.body);
   res.redirect('/home');
