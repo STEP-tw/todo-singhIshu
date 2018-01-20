@@ -39,7 +39,7 @@ class ToDoApp {
   }
   addNewToDoItem(username,toDoID,itemText){
     let user = this.users[username];
-    user.addItemInToDo(toDoID,itemText);
+    return user.addItemInToDo(toDoID,itemText);
   }
   deleteToDoItem(username,toDoID,toDoItemID){
     let user = this.users[username];

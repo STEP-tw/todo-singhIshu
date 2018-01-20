@@ -40,7 +40,7 @@ class User {
   }
   addItemInToDo(toDoID,title){
     let toDo = this.getToDo(toDoID);
-    toDo.addToDoItem(title);
+    return toDo.addToDoItem(title);
   }
   deleteItemInToDo(toDoID,toDoItemID){
     let toDo = this.getToDo(toDoID);

@@ -16,6 +16,7 @@ class ToDo {
   addToDoItem(title,status){
     let newToDoItem = new ToDoItem(title,this.counter++,status);
     this.toDoItems.push(newToDoItem);
+    return newToDoItem;
   }
   getToDoItem(toDoItemID){
     return this.toDoItems.find((item)=>{

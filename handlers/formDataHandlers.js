@@ -75,30 +75,33 @@ lib.getTodoItemsInHTML = (toDoItems) =>{
   return items.join("\n")
 }
 
-lib.extractItems = (toDoContents)=> {
+
+lib.storeTodoItems = (username,toDoContents,todoID)=> {
   let toDoItems = [];
-  for (var item in toDoContents) {
-    if (item.startsWith('item')) {
-      toDoItems.push(toDoContents[item]);
+  let attributesOfToDo = Object.keys(toDoContents);
+  for (var attribute in toDoContents) {
+    if (attribute.startsWith('item')) {
+      let itemText = toDoContents[attribute];
+      let toDoItem =toDoApp.addNewToDoItem(username,todoID,itemText);
+      let itemID = attribute.slice(4);
+      if (attributesOfToDo.includes(itemID)) {
+        toDoApp.markItemDone(username,todoID,toDoItem.id);
+        return;
+      }
     }
   }
   return toDoItems;
 }
 
 lib.storeNewTodo = (username,toDoData) =>{
-  let toDoItems = lib.extractItems(toDoData)
   let toDo = toDoApp.addToDoForUser(username,toDoData.title,toDoData.description);
-  toDoItems.forEach(function(item) {
-    toDoApp.addNewToDoItem(username,toDo.id,item);
-  });
+  lib.storeTodoItems(username,toDoData,toDo.id);
 }
-
 
 lib.replaceValue = (replacewith,name,content) =>{
   return content.replace(`<input type="text" name="${name}" value="">`,
   `<input type="text" name="${name}" value="${replacewith}">`);
 }
-
 
 lib.getEditForm = (username,toDoID) =>{
   let editForm = fs.readFileSync('./public/toDoForm.html','utf8');
