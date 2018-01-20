@@ -55,7 +55,7 @@ lib.getToDoMade = (toDoList)=> {
 }
 
 
-lib.displayHomePage = (username) =>{
+lib.getHomePage = (username) =>{
   let userData = getUserData(username);
   let homePageFormat = lib.getHomePageFormat();
   let userMadeToDos = lib.getToDoMade(userData.toDos);
@@ -102,13 +102,14 @@ lib.storeNewTodo = (username,toDoData) =>{
 
 lib.replaceValue = (replacewith,name,content) =>{
   return content.replace(`<input type="text" name="${name}" value="">`,
-  `<input type="text" name="${name}" value="${content}">`);
+  `<input type="text" name="${name}" value="${replacewith}">`);
 }
 
 
 lib.getEditForm = (username,toDoID) =>{
   let editForm = fs.readFileSync('./public/toDoForm.html','utf8');
   let todo = toDoApp.getUserTodo(username,toDoID);
+  console.log(todo);
   editForm = lib.replaceValue(todo.title,'title',editForm);
   return lib.replaceValue(todo.description,'description',editForm);
 }

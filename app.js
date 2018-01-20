@@ -1,7 +1,9 @@
 let fs = require('fs');
 const http = require('http');
 const WebApp = require('./webapp');
+const GetLoginHandler = require('./handlers/getLoginHandler.js');
 const lib = require('./handlers/dynamicPageHandlers.js');
+let getLoginHandler = new GetLoginHandler(fs,'./public/login.html');
 let registered_users = [{username:'ponu',name:'Prateek Kumar Singh'},{username:'ishusi',name:'Ishu Singh'}];
 let toS = o=>JSON.stringify(o,null,2);
 
@@ -25,16 +27,16 @@ let loadUser = (req,res)=>{
 
 let displayToDo = (req,res) => {
   if (req.user) {
-    lib.displayUserToDo(req,res);
+    lib.displayTodo(req,res);
   }
 }
 
 let redirectLoggedInUserToLogin = (req,res)=>{
-  if(req.urlIsOneOf(['/logout','/home','/toDoForm'])  && !req.user) res.redirect('/index');
+  if(req.urlIsOneOf(['/logout','/home','/toDoForm'])  && !req.user) res.redirect('/login');
 };
 
 let redirectLoggedOutUserToLogin = (req,res)=>{
-  if(req.urlIsOneOf(['/logout']) && req.user) res.redirect('/index');
+  if(req.urlIsOneOf(['/logout']) && req.user) res.redirect('/login');
 };
 
 let getTodoForm = (req,res)=>{
@@ -47,7 +49,7 @@ let processPostLogin =(req,res)=>{
   let user = registered_users.find(u=>u.username==req.body.username);
   if(!user) {
     res.setHeader('Set-Cookie','message=login failed; Max-Age=5');
-    res.redirect("/index");
+    res.redirect("/login");
     return;
   }
   let sessionid = new Date().getTime();
@@ -64,12 +66,12 @@ app.use(displayToDo);
 app.use(redirectLoggedInUserToLogin);
 app.use(redirectLoggedOutUserToLogin);
 app.get('/',(req,res)=>{
-  res.redirect('/index');
+  res.redirect('/login');
 });
 
-app.get('/index',lib.handleGetMainPage);
+app.get('/login',getLoginHandler.getRequestHandler());
 
-app.post('/index',processPostLogin);
+app.post('/login',processPostLogin);
 
 app.get('/toDoForm',getTodoForm);
 
@@ -77,6 +79,8 @@ app.get('/home',lib.handleHomePage);
 app.post('/toDoForm',lib.handlePostNewTodo);
 app.get('/logout',lib.handleLogoutPage);
 app.get('/delete',lib.deleteToDo);
+app.get('/edit',lib.editToDo);
+app.post('/edit',lib.getEdittedTodo);
 
 
 module.exports = app;

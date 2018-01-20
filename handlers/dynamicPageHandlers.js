@@ -1,26 +1,27 @@
 const fs = require('fs');
 const lib = require('./formDataHandlers.js');
 const getLoginPage = (req,res)=>{
-  let fileName = './public/index.html';
+  let fileName = './public/login.html';
   return fs.readFileSync(fileName,'utf8');
 }
 
 let pageLib = {};
+
 
 const isATitleOfSameUser = (toDoList,title,username) => {
   return toDoList.some(function(toDo) {
     return lib.isSameTitleAndUser(toDo,title,username);
   })
 }
+// 
+// pageLib.handleGetLoginPage = (req,res) =>{
+//   let loginPage = getLoginPage();
+//   res.setHeader('Content-type','text/html');
+//   res.write(loginPage.replace("<h2></h2>",req.cookies.message || ""));
+//   res.end();
+// }
 
-pageLib.handleGetMainPage = (req,res) =>{
-  let loginPage = getLoginPage();
-  res.setHeader('Content-type','text/html');
-  res.write(loginPage.replace("<h2></h2>",req.cookies.message || ""));
-  res.end();
-}
-
-pageLib.displayUserToDo = (req,res) =>{
+pageLib.displayTodo = (req,res) =>{
   let toDoPage = lib.getPreviousToDo(req.user,req.url.slice(1));
   if (toDoPage == undefined) {
     return;
@@ -32,22 +33,9 @@ pageLib.displayUserToDo = (req,res) =>{
 }
 
 pageLib.handleHomePage = (req,res) => {
-  let userHomePage = lib.displayHomePage(req.user.username);
+  let userHomePage = lib.getHomePage(req.user.username);
   res.write(userHomePage);
   res.end();
-}
-
-pageLib.isAUserAndNotAStaticPage = (req) =>{
-  let staticPages = ['/home','/index'];
-  return req.user && !staticPages.includes(req.url);
-}
-
-pageLib.viewPreviousTodo = (req,res) => {
-  if (pageLib.isAUserAndNotAStaticPage(req)) {
-    res.write(lib.displayPreviousToDo(req.url.slice(1),req.user.username))
-    res.end();
-  }
-  return;
 }
 
 pageLib.handlePostNewTodo = (req,res) => {
@@ -59,7 +47,7 @@ pageLib.handlePostNewTodo = (req,res) => {
 
 pageLib.handleLogoutPage = function(req,res) {
   delete req.user.sessionid;
-  res.redirect('/index');
+  res.redirect('/login');
 }
 
 pageLib.deleteToDo = (req,res)=>{
@@ -67,6 +55,20 @@ pageLib.deleteToDo = (req,res)=>{
   let todoID = req.user.todoID;
   lib.deleteToDo(username,todoID);
   res.redirect('/home');
+}
+
+pageLib.editToDo = (req,res)=>{
+  let username = req.user.username;
+  let todoID = req.user.todoID;
+  res.setHeader('Content-type','text/html');
+  res.write(lib.getEditForm(username,todoID));
+  res.end();
+}
+
+pageLib.getEdittedTodo =(req,res) =>{
+  let toDo = JSON.stringify(req.body);
+  res.write(toDo);
+  res.end();
 }
 
 

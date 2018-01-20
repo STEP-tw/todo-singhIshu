@@ -14,9 +14,9 @@ describe('app',()=>{
     })
   })
   describe('GET /',()=>{
-    it('redirects to index',done=>{
+    it('redirects to login',done=>{
       request(app,{method:'GET',url:'/'},(res)=>{
-        th.should_be_redirected_to(res,'/index');
+        th.should_be_redirected_to(res,'/login');
         assert.equal(res.body,"");
         done();
       })
@@ -30,9 +30,9 @@ describe('app',()=>{
       })
     })
   })
-  describe('GET /index',()=>{
-    it('gives the index page',done=>{
-      request(app,{method:'GET',url:'/index'},res=>{
+  describe('GET /login',()=>{
+    it('gives the login page',done=>{
+      request(app,{method:'GET',url:'/login'},res=>{
         th.status_is_ok(res);
         th.body_contains(res,'TODO App');
         done();
@@ -40,9 +40,9 @@ describe('app',()=>{
     })
   })
 
-  describe('GET /index',()=>{
-    it('serves the index page with login',done=>{
-      request(app,{method:'GET',url:'/index'},res=>{
+  describe('GET /login',()=>{
+    it('serves the login page with login',done=>{
+      request(app,{method:'GET',url:'/login'},res=>{
         th.status_is_ok(res);
         th.body_contains(res,'Name:');
         th.body_does_not_contain(res,'login failed');
@@ -50,8 +50,8 @@ describe('app',()=>{
         done();
       })
     })
-    it('serves the index page with message for a failed login',done=>{
-      request(app,{method:'GET',url:'/index',headers:{'cookie':'message=login failed'}},res=>{
+    it('serves the login page with message for a failed login',done=>{
+      request(app,{method:'GET',url:'/login',headers:{'cookie':'message=login failed'}},res=>{
         th.status_is_ok(res);
         th.body_contains(res,'Name:');
         th.body_contains(res,'login failed');
@@ -61,24 +61,24 @@ describe('app',()=>{
     })
   })
 
-  describe('POST /index',()=>{
+  describe('POST /login',()=>{
     it('redirects to homepage for valid user',done=>{
-      request(app,{method:'POST',url:'/index',body:'username=ishusi'},res=>{
+      request(app,{method:'POST',url:'/login',body:'username=ishusi'},res=>{
         th.should_be_redirected_to(res,'/home');
         th.should_not_have_cookie(res,'message');
         done();
       })
     })
     it('redirects to login with message for invalid user',done=>{
-      request(app,{method:'POST',url:'/index',body:'username=badUser'},res=>{
-        th.should_be_redirected_to(res,'/index');
+      request(app,{method:'POST',url:'/login',body:'username=badUser'},res=>{
+        th.should_be_redirected_to(res,'/login');
         th.should_have_expiring_cookie(res,'message','login failed');
         done();
       })
     })
     it('redirects to login with message for empty username',done=>{
-      request(app,{method:'POST',url:'/index',body:'username='},res=>{
-        th.should_be_redirected_to(res,'/index');
+      request(app,{method:'POST',url:'/login',body:'username='},res=>{
+        th.should_be_redirected_to(res,'/login');
         th.should_have_expiring_cookie(res,'message','login failed');
         done();
       })
@@ -86,9 +86,9 @@ describe('app',()=>{
   })
 
   describe('GET /home',()=>{
-    it('should redirect to index page if the user is not logged in',done=>{
+    it('should redirect to login page if the user is not logged in',done=>{
       request(app,{method:'GET',url:'/home'},res=>{
-        th.should_be_redirected_to(res,'/index');
+        th.should_be_redirected_to(res,'/login');
         done();
       })
     })
