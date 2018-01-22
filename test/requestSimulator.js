@@ -8,8 +8,6 @@ let request = function(app,options,onComplete){
   req.headers = options.headers||{};
   req.body = options.body;
   req.user = options.user;
-  console.log(req.user);
-
   let res={
     end:()=>{
       res.finished = true;
