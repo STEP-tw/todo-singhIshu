@@ -4,8 +4,12 @@ const WebApp = require('./webapp');
 const GetLoginHandler = require('./handlers/getLoginHandler.js');
 const lib = require('./handlers/pageHandlers.js');
 let getLoginHandler = new GetLoginHandler(fs,'./public/login.html');
-let users = require('./data/userInfo.json');
+let SessionHandler = require('./handlers/sessionHandler.js');
+let sessionHandler = new SessionHandler('./data/sessionData.json',fs);
+let users = JSON.parse(fs.readFileSync('./data/userInfo.json','utf8'));
 let app = WebApp.create();
+app.sessionHandler = sessionHandler;
+app.sessionHandler.loadSessions();
 
 let toS = o=>JSON.stringify(o,null,2);
 
@@ -27,9 +31,9 @@ let logRequest = (req,res)=>{
 
 let loadUser = (req,res)=>{
   let sessionid = req.cookies.sessionid;
-  let user = users.find(u=>u.sessionid==sessionid);
-  if(sessionid && user){
-    req.user = user;
+  let username = app.sessionHandler.getUserBySessionID(sessionid);
+  if (sessionid && username) {
+    req.user = {username:username};
   }
 };
 
@@ -54,7 +58,6 @@ let getTodoForm = (req,res)=>{
 }
 
 let processPostLogin =(req,res)=>{
-
   let user = users.find(u=>u.username==req.body.username);
   if(!user) {
     res.setHeader('Set-Cookie','message=login failed; Max-Age=5');
@@ -63,9 +66,16 @@ let processPostLogin =(req,res)=>{
   }
   let sessionid = new Date().getTime();
   res.setHeader('Set-Cookie',`sessionid=${sessionid}`);
-  user.sessionid = sessionid;
+  app.sessionHandler.addSession(sessionid,user.username);
   res.redirect('/home');
 }
+
+let handleLogout = (req,res)=> {
+  let sessionID = req.cookies.sessionid;
+  app.sessionHandler.deleteSession(sessionID);
+  res.redirect('/login');
+}
+
 
 app.use(loadUser);
 app.use(logRequest);
@@ -84,7 +94,7 @@ app.get('/toDoForm',getTodoForm);
 
 app.get('/home',lib.handleHomePage);
 app.post('/toDoForm',lib.handlePostNewTodo);
-app.get('/logout',lib.handleLogoutPage);
+app.get('/logout',handleLogout);
 app.get('/delete',lib.deleteToDo);
 app.get('/edit',lib.editToDo);
 app.post('/edit',lib.getEdittedTodo);

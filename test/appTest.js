@@ -3,6 +3,13 @@ let assert = chai.assert;
 let request = require('./requestSimulator.js');
 let app = require('../app.js');
 let th = require('./testHelper.js');
+let MockFs = require('../handlers/mockfs.js');
+let mockfs = new MockFs();
+mockfs.writeFileSync('sessionsInfo',JSON.stringify({1234:'ishusi'}));
+
+const SessionHandler = require('../handlers/sessionHandler.js');
+app.sessionHandler = new SessionHandler('sessionsInfo',mockfs);
+app.sessionHandler.loadSessions();
 
 describe('app',()=>{
   describe('GET /bad',()=>{
@@ -39,6 +46,7 @@ describe('app',()=>{
     })
   })
 
+
   describe('GET /login',()=>{
     it('serves the login page with login',done=>{
       request(app,{method:'GET',url:'/login'},res=>{
@@ -50,7 +58,7 @@ describe('app',()=>{
       })
     })
     it('redirects the home page if already loggedin',done=>{
-      request(app,{method:'GET',url:'/login',headers:{'cookie':'sessionid=0'}},res=>{
+      request(app,{method:'GET',url:'/login',headers:{'cookie':'sessionid=1234'}},res=>{
         th.should_be_redirected_to(res,'/home');
         done();
       })
@@ -82,7 +90,7 @@ describe('app',()=>{
       })
     })
     it('should give home page for valid user',done=>{
-      request(app,{method:'GET',url:'/home',headers:{'cookie':'sessionid=0'}},res=>{
+      request(app,{method:'GET',url:'/home',headers:{'cookie':'sessionid=1234'}},res=>{
         th.status_is_ok(res);
         done();
       })
@@ -91,7 +99,7 @@ describe('app',()=>{
 
   describe('GET /toDoForm',()=>{
     it('serves the todo form to valid user',done=>{
-      request(app,{method:'GET',url:'/toDoForm',headers:{'cookie':'sessionid=0'}},res=>{
+      request(app,{method:'GET',url:'/toDoForm',headers:{'cookie':'sessionid=1234'}},res=>{
         th.status_is_ok(res);
         done();
       })
@@ -112,7 +120,7 @@ describe('app',()=>{
 
   describe('POST /toDoForm',()=>{
     it('submits the new todo of valid user',done=>{
-      request(app,{method:'POST',url:'/toDoForm',headers:{'cookie':'sessionid=0'},body:'title=sunday'},res=>{
+      request(app,{method:'POST',url:'/toDoForm',headers:{'cookie':'sessionid=1234'},body:'title=sunday'},res=>{
         th.should_be_redirected_to(res,'/home');
       })
       done();
@@ -133,7 +141,7 @@ describe('app',()=>{
 
   describe('GET /delete',()=>{
     it('should redirect the valid user to the home page',done=>{
-      request(app,{method:'GET',url:'/delete',headers:{'cookie':'sessionid=0'}},res=>{
+      request(app,{method:'GET',url:'/delete',headers:{'cookie':'sessionid=1234'}},res=>{
         th.should_be_redirected_to(res,'/home');
       })
       done();
@@ -154,7 +162,7 @@ describe('app',()=>{
 
   describe.skip('GET /edit',()=>{
     it('should display the edit toDoform to the valid user',done=>{
-      request(app,{method:'GET',url:'/edit',headers:{'cookie':'sessionid=0'}},res=>{
+      request(app,{method:'GET',url:'/edit',headers:{'cookie':'sessionid=1234'}},res=>{
         th.status_is_ok(res);
       })
       done();
@@ -170,7 +178,7 @@ describe('app',()=>{
 
   describe('GET /logout',()=>{
     it('should redirect to login page for valid user',()=>{
-      request(app,{method:'GET',url:'/logout',headers:{'cookie':'sessionid=0'}},res=>{
+      request(app,{method:'GET',url:'/logout',headers:{'cookie':'sessionid=1234'}},res=>{
         th.should_not_have_cookie(res,'sessionid')
         th.should_be_redirected_to(res,'/login');
       })

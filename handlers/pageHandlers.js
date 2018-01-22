@@ -38,10 +38,6 @@ pageLib.handlePostNewTodo = (req,res) => {
   res.end();
 }
 
-pageLib.handleLogoutPage = function(req,res) {
-  delete req.user.sessionid;
-  res.redirect('/login');
-}
 
 pageLib.deleteToDo = (req,res)=>{
   let username = req.user.username;
