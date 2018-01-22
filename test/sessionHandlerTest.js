@@ -2,13 +2,14 @@ let chai = require('chai');
 let assert = chai.assert;
 let request = require('./requestSimulator.js');
 let th = require('./testHelper.js');
-const fs = require('fs');
+const MockFs = require('../handlers/mockfs.js');
 let SessionHandler = require('../handlers/sessionHandler.js');
 
 describe('sessionHandler ',()=>{
   let sessionHandler = {};
   beforeEach(function(){
-    sessionHandler = new SessionHandler('./data/sessionData.json',fs);
+    let mockFs = new MockFs();
+    sessionHandler = new SessionHandler('./data/sessionData.json',mockFs);
   })
   describe('addSession()',()=>{
     it('should add new session ',done=>{
@@ -21,14 +22,14 @@ describe('sessionHandler ',()=>{
   })
   describe('deleteSession()',()=>{
     it('should delete the session ',done=>{
-      sessionHandler.loadSessions();
+      sessionHandler.addSession(1234,'ishusi');
       sessionHandler.deleteSession(1234);
       let actual = sessionHandler.sessions;
       assert.deepEqual(actual,{});
       done();
     })
   })
-  describe('loadSessionID()',()=>{
+  describe('loadSessions()',()=>{
     it('should load all the sessions into SessionHandler',done=>{
       let actual = sessionHandler.sessions;
       let expected = {1234:"ishusi"};
