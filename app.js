@@ -2,9 +2,11 @@ let fs = require('fs');
 const http = require('http');
 const WebApp = require('./webapp');
 const GetLoginHandler = require('./handlers/getLoginHandler.js');
-const lib = require('./handlers/dynamicPageHandlers.js');
+const lib = require('./handlers/pageHandlers.js');
 let getLoginHandler = new GetLoginHandler(fs,'./public/login.html');
-let registered_users = [{username:'ponu',name:'Prateek Kumar Singh',sessionid:0},{username:'ishusi',name:'Ishu Singh',sessionid:1}];
+let users = require('./data/userInfo.json');
+let app = WebApp.create();
+
 let toS = o=>JSON.stringify(o,null,2);
 
 const processGetLogin= function(req,res) {
@@ -19,12 +21,13 @@ let logRequest = (req,res)=>{
     `HEADERS=> ${toS(req.headers)}`,
     `COOKIES=> ${toS(req.cookies)}`,
     `BODY=> ${toS(req.body)}`,''].join('\n');
+    console.log(req.url);
   fs.appendFile('request.log',text,()=>{});
 };
 
 let loadUser = (req,res)=>{
   let sessionid = req.cookies.sessionid;
-  let user = registered_users.find(u=>u.sessionid==sessionid);
+  let user = users.find(u=>u.sessionid==sessionid);
   if(sessionid && user){
     req.user = user;
   }
@@ -37,7 +40,7 @@ let displayToDo = (req,res) => {
 }
 
 let redirectUnloggedUserToLogin = (req,res)=>{
-  if(req.urlIsOneOf(['/logout','/home','/toDoForm','/delete'])  && !req.user) res.redirect('/login');
+  if(req.urlIsOneOf(['/logout','/home','/toDoForm','/delete','/edit'])  && !req.user) res.redirect('/login');
 };
 
 let redirectLoggedInUserToHome = (req,res)=>{
@@ -51,7 +54,8 @@ let getTodoForm = (req,res)=>{
 }
 
 let processPostLogin =(req,res)=>{
-  let user = registered_users.find(u=>u.username==req.body.username);
+
+  let user = users.find(u=>u.username==req.body.username);
   if(!user) {
     res.setHeader('Set-Cookie','message=login failed; Max-Age=5');
     res.redirect("/login");
@@ -63,10 +67,8 @@ let processPostLogin =(req,res)=>{
   res.redirect('/home');
 }
 
-
-let app = WebApp.create();
-app.use(logRequest);
 app.use(loadUser);
+app.use(logRequest);
 app.use(displayToDo);
 app.use(redirectUnloggedUserToLogin);
 app.use(redirectLoggedInUserToHome);

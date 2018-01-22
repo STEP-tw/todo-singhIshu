@@ -1,5 +1,5 @@
 const fs = require('fs');
-const lib = require('./formDataHandlers.js');
+const lib = require('./dataHandlers.js');
 const getLoginPage = (req,res)=>{
   let fileName = './public/login.html';
   return fs.readFileSync(fileName,'utf8');
@@ -54,7 +54,8 @@ pageLib.editToDo = (req,res)=>{
   let username = req.user.username;
   let todoID = req.user.todoID;
   res.setHeader('Content-type','text/html');
-  res.write(lib.getEditForm(username,todoID));
+  let editedForm = lib.getEditForm(username,todoID);
+  res.write(editedForm);
   res.end();
 }
 

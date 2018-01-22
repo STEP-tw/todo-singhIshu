@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for todo-singhIshu/handlers/dataHandlers.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">All files</a> / <a href="index.html">todo-singhIshu/handlers</a> dataHandlers.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">69.44% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>50/72</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">33.33% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>2/6</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">64.71% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>11/17</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">69.44% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>50/72</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line medium'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const fs = require('fs');
+const users = require('../model/users.js');
+&nbsp;
+let users = new users();
+users.addUser('ishusi',0);
+users.addUser('ponu',1);
+users.addToDoForUser('ishusi',0);
+&nbsp;
+const getUserData = (username) =&gt;{
+  return users.users[username];
+}
+&nbsp;
+let lib = {};
+&nbsp;
+lib.getHomePageFormat = ()=&gt;{
+  return fs.readFileSync('./public/homePage.html','utf8');
+}
+&nbsp;
+lib.getToDoFormat = <span class="fstat-no" title="function not covered" >()</span>=&gt; {
+<span class="cstat-no" title="statement not covered" >  return fs.readFileSync('./public/toDoFormat.html','utf8');</span>
+}
+&nbsp;
+lib.isTodoOfSameUser = (toDoList,toDoID) =&gt; {
+  return toDoList.some(function(toDo) {
+    return toDo.id == toDoID;
+  })
+}
+&nbsp;
+lib.getToDo = (user,toDoID) =&gt; {
+  let username = user.username;
+  let userInfo = getUserData(username);
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (lib.isTodoOfSameUser(userInfo.toDos,toDoID)) {
+<span class="cstat-no" title="statement not covered" >    user.todoID = toDoID;</span>
+    let toDo = <span class="cstat-no" title="statement not covered" >users.getUserTodo(username,user.todoID);</span>
+<span class="cstat-no" title="statement not covered" >    return lib.displayToDo(toDo);</span>
+  }
+  return;
+}
+&nbsp;
+&nbsp;
+lib.deleteToDo = (username,toDoID) =&gt; {
+  users.deleteTodoList(username,toDoID);
+}
+&nbsp;
+&nbsp;
+lib.getLinksOfTodos = (toDoList)=&gt; {
+  let toDos=toDoList.map(<span class="fstat-no" title="function not covered" >fu</span>nction(toDo){
+<span class="cstat-no" title="statement not covered" >    return `&lt;a href="${toDo.id}"&gt;${toDo.title}&lt;/a&gt;`</span>
+  })
+  return toDos.join("\n")
+}
+&nbsp;
+&nbsp;
+lib.getHomePage = (username) =&gt;{
+  let userData = getUserData(username);
+  let homePageFormat = lib.getHomePageFormat();
+  let userToDos = lib.getLinksOfTodos(userData.toDos);
+  let homeWithUserName = homePageFormat.replace("UserName",userData.username);
+  let homeWithToDoLists = homeWithUserName.replace("toDoMade",userToDos);
+  return homeWithToDoLists;
+}
+&nbsp;
+lib.displayToDo = <span class="fstat-no" title="function not covered" >(u</span>serInfo)=&gt;{
+  let toDoFormat = <span class="cstat-no" title="statement not covered" >lib.getToDoFormat();</span>
+  let toDoItems = <span class="cstat-no" title="statement not covered" >lib.getTodoItemsInHTML(userInfo.toDoItems);</span>
+  let toDoWithTitle = <span class="cstat-no" title="statement not covered" >toDoFormat.replace("&lt;titl&gt;",userInfo.title);</span>
+  let toDoWithDes = <span class="cstat-no" title="statement not covered" >toDoWithTitle.replace('&lt;des&gt;',userInfo.description);</span>
+  let toDoWithItem = <span class="cstat-no" title="statement not covered" >toDoWithDes.replace('&lt;item&gt;',toDoItems);</span>
+<span class="cstat-no" title="statement not covered" >  return toDoWithItem;</span>
+}
+&nbsp;
+lib.getTodoItemsInHTML = <span class="fstat-no" title="function not covered" >(t</span>oDoItems) =&gt;{
+  let items=<span class="cstat-no" title="statement not covered" >toDoItems.map(<span class="fstat-no" title="function not covered" >fu</span>nction(toDoItem){</span>
+<span class="cstat-no" title="statement not covered" >    return `&lt;br&gt;${toDoItem.itemText}&lt;br&gt;`</span>
+  })
+<span class="cstat-no" title="statement not covered" >  return items.join("\n")</span>
+}
+&nbsp;
+&nbsp;
+lib.storeTodoItems = (username,toDoContents,todoID)=&gt; {
+  let toDoItems = [];
+  let attributesOfToDo = Object.keys(toDoContents);
+  for (var attribute in toDoContents) {
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (attribute.startsWith('item')) {
+      let itemText = <span class="cstat-no" title="statement not covered" >toDoContents[attribute];</span>
+      let toDoItem =<span class="cstat-no" title="statement not covered" >users.addNewToDoItem(username,todoID,itemText);</span>
+      let itemID = <span class="cstat-no" title="statement not covered" >attribute.slice(4);</span>
+<span class="cstat-no" title="statement not covered" >      if (attributesOfToDo.includes(itemID)) {</span>
+<span class="cstat-no" title="statement not covered" >        users.markItemDone(username,todoID,toDoItem.id);</span>
+<span class="cstat-no" title="statement not covered" >        return;</span>
+      }
+    }
+  }
+  return toDoItems;
+}
+&nbsp;
+lib.storeNewTodo = (username,toDoData) =&gt;{
+  let toDo = users.addToDoForUser(username,toDoData.title,toDoData.description);
+  lib.storeTodoItems(username,toDoData,toDo.id);
+}
+&nbsp;
+lib.replaceValue = <span class="fstat-no" title="function not covered" >(r</span>eplacewith,name,content) =&gt;{
+<span class="cstat-no" title="statement not covered" >  return content.replace(`&lt;input type="text" name="${name}" value=""&gt;`,</span>
+  `&lt;input type="text" name="${name}" value="${replacewith}"&gt;`);
+}
+&nbsp;
+lib.getEditForm = (username,toDoID) =&gt;{
+  let editForm = fs.readFileSync('./public/toDoForm.html','utf8');
+  console.log(users);
+  let todo = users.getUserTodo(username,toDoID);
+  editForm = lib.replaceValue(todo.title,'title',editForm);
+<span class="cstat-no" title="statement not covered" >  return lib.replaceValue(todo.description,'description',editForm);</span>
+}
+&nbsp;
+&nbsp;
+&nbsp;
+module.exports = lib;
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Jan 22 2018 10:27:41 GMT+0530 (IST)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

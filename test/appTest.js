@@ -144,6 +144,27 @@ describe('app',()=>{
       })
       done();
     })
+    it('should redirect to login page if user is not logged in',done=>{
+      request(app,{method:'GET',url:'/delete'},res=>{
+        th.should_be_redirected_to(res,'/login');
+      })
+      done();
+    })
+  })
+
+  describe.skip('GET /edit',()=>{
+    it('should display the edit toDoform to the valid user',done=>{
+      request(app,{method:'GET',url:'/edit',headers:{'cookie':'sessionid=0'}},res=>{
+        th.status_is_ok(res);
+      })
+      done();
+    })
+    it('should redirect to login page if the user is invalid',done=>{
+      request(app,{method:'GET',url:'/edit',headers:{'cookie':'sessionid=4'}},res=>{
+        th.should_be_redirected_to(res,'/login');
+      })
+      done();
+    })
   })
 
 

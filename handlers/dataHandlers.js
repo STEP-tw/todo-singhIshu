@@ -1,12 +1,13 @@
 const fs = require('fs');
-const ToDoApp = require('../model/toDoApp.js');
+const UsersStore = require('../model/usersStore.js');
 
-let toDoApp = new ToDoApp();
-toDoApp.addUser('ishusi',0);
-toDoApp.addUser('ponu',1);
+let usersStore = new UsersStore();
+usersStore.addUser('ishusi',0);
+usersStore.addUser('ponu',1);
+usersStore.addToDoForUser('ishusi',"sunday");
 
 const getUserData = (username) =>{
-  return toDoApp.users[username];
+  return usersStore.users[username];
 }
 
 let lib = {};
@@ -30,7 +31,7 @@ lib.getToDo = (user,toDoID) => {
   let userInfo = getUserData(username);
   if (lib.isTodoOfSameUser(userInfo.toDos,toDoID)) {
     user.todoID = toDoID;
-    let toDo = toDoApp.getUserTodo(username,user.todoID);
+    let toDo = usersStore.getUserTodo(username,user.todoID);
     return lib.displayToDo(toDo);
   }
   return;
@@ -38,7 +39,7 @@ lib.getToDo = (user,toDoID) => {
 
 
 lib.deleteToDo = (username,toDoID) => {
-  toDoApp.deleteTodoList(username,toDoID);
+  usersStore.deleteTodoList(username,toDoID);
 }
 
 
@@ -82,10 +83,10 @@ lib.storeTodoItems = (username,toDoContents,todoID)=> {
   for (var attribute in toDoContents) {
     if (attribute.startsWith('item')) {
       let itemText = toDoContents[attribute];
-      let toDoItem =toDoApp.addNewToDoItem(username,todoID,itemText);
+      let toDoItem =usersStore.addNewToDoItem(username,todoID,itemText);
       let itemID = attribute.slice(4);
       if (attributesOfToDo.includes(itemID)) {
-        toDoApp.markItemDone(username,todoID,toDoItem.id);
+        usersStore.markItemDone(username,todoID,toDoItem.id);
         return;
       }
     }
@@ -94,7 +95,7 @@ lib.storeTodoItems = (username,toDoContents,todoID)=> {
 }
 
 lib.storeNewTodo = (username,toDoData) =>{
-  let toDo = toDoApp.addToDoForUser(username,toDoData.title,toDoData.description);
+  let toDo = usersStore.addToDoForUser(username,toDoData.title,toDoData.description);
   lib.storeTodoItems(username,toDoData,toDo.id);
 }
 
@@ -105,7 +106,7 @@ lib.replaceValue = (replacewith,name,content) =>{
 
 lib.getEditForm = (username,toDoID) =>{
   let editForm = fs.readFileSync('./public/toDoForm.html','utf8');
-  let todo = toDoApp.getUserTodo(username,toDoID);
+  let todo = usersStore.getUserTodo(username,toDoID);
   editForm = lib.replaceValue(todo.title,'title',editForm);
   return lib.replaceValue(todo.description,'description',editForm);
 }

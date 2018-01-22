@@ -1,5 +1,5 @@
 const User = require('./user.js');
-class ToDoApp {
+class UsersStore {
   constructor() {
     this.users ={};
   }
@@ -59,4 +59,4 @@ class ToDoApp {
   }
 }
 
-module.exports = ToDoApp;
+module.exports = UsersStore;
