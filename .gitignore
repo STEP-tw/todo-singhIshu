@@ -6,3 +6,4 @@ node_modules/
 .loginTest.js
 ./coverage
 ./.nyc_output
+./data/sessionData.json
