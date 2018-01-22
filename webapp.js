@@ -5,37 +5,6 @@ const toKeyValue = kv=>{
   return {key:parts[0].trim(),value:parts[1].trim()};
 };
 
-const getContentType = function(filename) {
-  let fileType = filename.slice(filename.lastIndexOf("."));
-  let types = {
-    ".jpg": "img/jpg",
-    ".jpeg": "img/jepg",
-    ".html": "text/html",
-    ".css": "text/css",
-    ".js": "text/javascript",
-    ".gif": "img/gif",
-    ".pdf": "text/pdf",
-    ".png": "img/png",
-    ".txt": "text/txt"
-  }
-  return types[fileType];
-}
-
-const readFileContents = function(response,fileName) {
-  fileName = `./public${fileName}`;
-  fs.readFile(fileName,(err,data)=>{
-    if (err) {
-      response.statusCode = 404;
-      response.write("File Not Found"+fileName);
-      response.end();
-      return;
-    }
-    response.setHeader("Content-type",getContentType(fileName));
-    response.write(data);
-    response.end();
-  })
-}
-
 const accumulate = (o,kv)=> {
   o[kv.key] = kv.value;
   return o;
@@ -69,6 +38,7 @@ let invoke = function(req,res){
 const initialize = function(){
   this._handlers = {GET:{},POST:{}};
   this._preprocess = [];
+  this._postprocess = [];
 };
 const get = function(url,handler){
   this._handlers.GET[url] = handler;
@@ -79,6 +49,9 @@ const post = function(url,handler){
 const use = function(handler){
   this._preprocess.push(handler);
 };
+const usePostProcess = function(handler){
+  this._postprocess.push(handler);
+}
 let urlIsOneOf = function(urls){
   return urls.includes(this.url);
 }
@@ -100,7 +73,10 @@ const main = function(req,res){
     if(res.finished) return;
     invoke.call(this,req,res);
     if (res.finished) return;
-    readFileContents(res,req.url);
+    this._postprocess.forEach(middleware=>{
+      if(res.finished) return;
+      middleware(req,res);
+    });
   });
 };
 
@@ -112,6 +88,7 @@ let create = ()=>{
   rh.get = get;
   rh.post = post;
   rh.use = use;
+  rh.usePostProcess = usePostProcess;
   return rh;
 }
 exports.create = create;

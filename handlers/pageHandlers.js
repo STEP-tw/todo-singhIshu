@@ -1,18 +1,6 @@
 const fs = require('fs');
 const lib = require('./dataHandlers.js');
-const getLoginPage = (req,res)=>{
-  let fileName = './public/login.html';
-  return fs.readFileSync(fileName,'utf8');
-}
-
 let pageLib = {};
-
-
-const isATitleOfSameUser = (toDoList,title,username) => {
-  return toDoList.some(function(toDo) {
-    return lib.isSameTitleAndUser(toDo,title,username);
-  })
-}
 
 pageLib.displayTodo = (req,res) =>{
   let toDoPage = lib.getToDo(req.user,req.url.slice(1));
@@ -54,12 +42,5 @@ pageLib.editToDo = (req,res)=>{
   res.write(editedForm);
   res.end();
 }
-
-pageLib.getEdittedTodo =(req,res) =>{
-  let toDo = JSON.stringify(req.body);
-  res.write(toDo);
-  res.end();
-}
-
 
 module.exports = pageLib;

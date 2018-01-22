@@ -34,9 +34,10 @@ class StaticFileHandler extends DefaultHandler{
     res.end();
   }
   execute(req,res){
-    let filePath = this.getFilePath(req.url)
+    let filePath = this.getFilePath(req.url);
     if (!this.fs.existsSync(filePath)) {
-      res.write('file not Found');
+      res.statusCode = 404;
+      res.write('file not found');
       res.end();
       return;
     }

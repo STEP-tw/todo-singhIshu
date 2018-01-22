@@ -1,6 +1,6 @@
 let chai = require('chai');
 let assert = chai.assert;
-let UsersStore = require('../model/usersStore.js');
+let UsersStore = require('../models/usersStore.js');
 
 describe('UsersStore',()=>{
   describe('new usersStore()',()=>{

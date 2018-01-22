@@ -1,8 +1,10 @@
 let fs = require('fs');
 const http = require('http');
 const WebApp = require('./webapp');
+const StaticFileHandler = require('./handlers/StaticFileHandler.js');
 const GetLoginHandler = require('./handlers/getLoginHandler.js');
 const lib = require('./handlers/pageHandlers.js');
+let fileHandler = new StaticFileHandler('./public',fs);
 let getLoginHandler = new GetLoginHandler(fs,'./public/login.html');
 let SessionHandler = require('./handlers/sessionHandler.js');
 let sessionHandler = new SessionHandler('./data/sessionData.json',fs);
@@ -98,6 +100,6 @@ app.get('/logout',handleLogout);
 app.get('/delete',lib.deleteToDo);
 app.get('/edit',lib.editToDo);
 app.post('/edit',lib.getEdittedTodo);
-
+app.usePostProcess(fileHandler.getRequestHandler());
 
 module.exports = app;

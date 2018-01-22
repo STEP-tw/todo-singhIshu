@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for todo-singhIshu/handlers/getLoginHandler.js</title>
+    <title>Code coverage report for todo-singhIshu/handlers/sessionHandler.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -16,28 +16,28 @@
 <div class='wrapper'>
   <div class='pad1'>
     <h1>
-      <a href="../../index.html">All files</a> / <a href="index.html">todo-singhIshu/handlers</a> getLoginHandler.js
+      <a href="../../index.html">All files</a> / <a href="index.html">todo-singhIshu/handlers</a> sessionHandler.js
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>8/8</span>
+        <span class='fraction'>14/14</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>2/2</span>
+        <span class='fraction'>0/0</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>2/2</span>
+        <span class='fraction'>6/6</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>8/8</span>
+        <span class='fraction'>14/14</span>
       </div>
     </div>
   </div>
@@ -59,38 +59,83 @@
 14
 15
 16
-17</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">26x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">let fs =require('fs');
-const DefaultHandler = require('./defaultHandler.js');
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const fs = require('fs');
 &nbsp;
-class GetLoginHandler extends DefaultHandler {
-  constructor(fileContent) {
-    super();
-    this.fileContent = fileContent;
+class SessionHandler {
+  constructor(storagePath,fs) {
+    this.storagePath = storagePath;
+    this.sessions ={}
+    this.fs =fs;
   }
-  execute(req,res){
-    res.setHeader('Content-type','text/html');
-    res.write(this.fileContent.replace("&lt;h2&gt;&lt;/h2&gt;",req.cookies.message || ""));
-    res.end();
+  loadSessions(){
+    let  sessions = this.fs.readFileSync(this.storagePath,'utf8');
+    this.sessions = JSON.parse(sessions);
+  }
+  storeSessions(){
+    let sessions = JSON.stringify(this.sessions);
+    this.fs.writeFileSync(this.storagePath,sessions);
+  }
+  addSession(sessionID,username){
+    this.sessions[sessionID] = username;
+    this.storeSessions();
+  }
+  deleteSession(sessionID){
+    delete this.sessions[sessionID];
+    this.storeSessions();
+  }
+  getUserBySessionID(sessionID){
+    return this.sessions[sessionID];
   }
 }
 &nbsp;
-module.exports = GetLoginHandler;
+&nbsp;
+module.exports = SessionHandler;
 &nbsp;</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->

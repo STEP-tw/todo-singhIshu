@@ -1,6 +1,6 @@
 let chai = require('chai');
 let assert = chai.assert;
-let User = require('../model/user.js');
+let User = require('../models/user.js');
 
 describe('User',()=>{
   describe('new User()',()=>{

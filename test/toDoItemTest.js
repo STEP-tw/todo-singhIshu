@@ -1,6 +1,6 @@
 let chai = require('chai');
 let assert = chai.assert;
-let ToDoItem = require('../model/toDoItem.js');
+let ToDoItem = require('../models/toDoItem.js');
 
 describe('ToDoItem',()=>{
   describe('new ToDoItem()',()=>{

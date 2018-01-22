@@ -1,5 +1,5 @@
 const fs = require('fs');
-const UsersStore = require('../model/usersStore.js');
+const UsersStore = require('../models/usersStore.js');
 
 let usersStore = new UsersStore();
 usersStore.addUser('ishusi',0);

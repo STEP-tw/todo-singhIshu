@@ -38,12 +38,22 @@ describe('staticFileHandler()',()=>{
     assert.equal(actual,expected);
   })
 
-  it('execute() gives the index page',done=>{
-    request(fileHandler.getRequestHandler(),{method:'GET',url:'/index.html'},res=>{
-      th.status_is_ok(res);
-      th.content_type_is(res,'text/html');
-      th.body_contains(res,'../public/index.html');
+  describe('execute ',()=>{
+    it('execute() gives the index page',done=>{
+      request(fileHandler.getRequestHandler(),{method:'GET',url:'/index.html'},res=>{
+        th.status_is_ok(res);
+        th.content_type_is(res,'text/html');
+        th.body_contains(res,'../public/index.html');
+      })
+      done();
     })
-    done();
+    it('should give responds as file not found if file doent exists',done=>{
+      request(fileHandler.getRequestHandler(),{method:'GET',url:'/hello.html'},res=>{
+        th.body_contains(res,'file not found');
+      })
+      done();
+    })
+
   })
+
 });

@@ -22,7 +22,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>65/65</span>
+        <span class='fraction'>72/72</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -37,7 +37,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>60/60</span>
+        <span class='fraction'>68/68</span>
       </div>
     </div>
   </div>
@@ -137,16 +137,29 @@
 92
 93
 94
-95</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">78x</span>
+<span class="cline-any cline-yes">75x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -155,31 +168,31 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">26x</span>
+<span class="cline-any cline-yes">25x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">26x</span>
-<span class="cline-any cline-yes">26x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">26x</span>
-<span class="cline-any cline-yes">41x</span>
-<span class="cline-any cline-yes">26x</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-yes">25x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">26x</span>
-<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">26x</span>
+<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">25x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -206,6 +219,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -235,10 +253,14 @@
 const http = require('http');
 const WebApp = require('./webapp');
 const GetLoginHandler = require('./handlers/getLoginHandler.js');
-const lib = require('./handlers/pageHandlerss.js');
+const lib = require('./handlers/pageHandlers.js');
 let getLoginHandler = new GetLoginHandler(fs,'./public/login.html');
-let users = require('./data/userInfo.json');
-&nbsp;
+let SessionHandler = require('./handlers/sessionHandler.js');
+let sessionHandler = new SessionHandler('./data/sessionData.json',fs);
+let users = JSON.parse(fs.readFileSync('./data/userInfo.json','utf8'));
+let app = WebApp.create();
+app.sessionHandler = sessionHandler;
+app.sessionHandler.loadSessions();
 &nbsp;
 let toS = o=&gt;JSON.stringify(o,null,2);
 &nbsp;
@@ -260,9 +282,9 @@ let logRequest = (req,res)=&gt;{
 &nbsp;
 let loadUser = (req,res)=&gt;{
   let sessionid = req.cookies.sessionid;
-  let user = users.find(u=&gt;u.sessionid==sessionid);
-  if(sessionid &amp;&amp; user){
-    req.user = user;
+  let username = app.sessionHandler.getUserBySessionID(sessionid);
+  if (sessionid &amp;&amp; username) {
+    req.user = {username:username};
   }
 };
 &nbsp;
@@ -295,14 +317,19 @@ let processPostLogin =(req,res)=&gt;{
   }
   let sessionid = new Date().getTime();
   res.setHeader('Set-Cookie',`sessionid=${sessionid}`);
-  user.sessionid = sessionid;
+  app.sessionHandler.addSession(sessionid,user.username);
   res.redirect('/home');
 }
 &nbsp;
-let app = WebApp.create();
+let handleLogout = (req,res)=&gt; {
+  let sessionID = req.cookies.sessionid;
+  app.sessionHandler.deleteSession(sessionID);
+  res.redirect('/login');
+}
 &nbsp;
-app.use(logRequest);
+&nbsp;
 app.use(loadUser);
+app.use(logRequest);
 app.use(displayToDo);
 app.use(redirectUnloggedUserToLogin);
 app.use(redirectLoggedInUserToHome);
@@ -318,7 +345,7 @@ app.get('/toDoForm',getTodoForm);
 &nbsp;
 app.get('/home',lib.handleHomePage);
 app.post('/toDoForm',lib.handlePostNewTodo);
-app.get('/logout',lib.handleLogoutPage);
+app.get('/logout',handleLogout);
 app.get('/delete',lib.deleteToDo);
 app.get('/edit',lib.editToDo);
 app.post('/edit',lib.getEdittedTodo);
@@ -331,7 +358,7 @@ module.exports = app;
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Jan 22 2018 10:27:41 GMT+0530 (IST)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Jan 22 2018 23:27:41 GMT+0530 (IST)
 </div>
 </div>
 <script src="../prettify.js"></script>

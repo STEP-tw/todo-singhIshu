@@ -20,19 +20,20 @@ describe('app',()=>{
       })
     })
   })
+  describe('GET /login.html',()=>{
+    it('serves the login.html file',done=>{
+      request(app,{method:"GET",url:'/login.html'},(res)=>{
+        th.status_is_ok(res);
+        th.body_contains(res,'<h1>TODO App</h1>');
+        done();
+      })
+    })
+  })
   describe('GET /',()=>{
     it('redirects to login',()=>{
       request(app,{method:'GET',url:'/'},(res)=>{
         th.should_be_redirected_to(res,'/login');
         assert.equal(res.body,"");
-      })
-    })
-  })
-  describe('POST /',()=>{
-    it('responds with 404',done=>{
-      request(app,{method:'POST',url:'/'},(res)=>{
-        assert.equal(res.statusCode,404);
-        done();
       })
     })
   })
@@ -160,13 +161,7 @@ describe('app',()=>{
     })
   })
 
-  describe.skip('GET /edit',()=>{
-    it('should display the edit toDoform to the valid user',done=>{
-      request(app,{method:'GET',url:'/edit',headers:{'cookie':'sessionid=1234'}},res=>{
-        th.status_is_ok(res);
-      })
-      done();
-    })
+  describe('GET /edit',()=>{
     it('should redirect to login page if the user is invalid',done=>{
       request(app,{method:'GET',url:'/edit',headers:{'cookie':'sessionid=4'}},res=>{
         th.should_be_redirected_to(res,'/login');
