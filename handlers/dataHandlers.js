@@ -6,8 +6,12 @@ usersStore.addUser('ishusi',0);
 usersStore.addUser('ponu',1);
 usersStore.addToDoForUser('ishusi',"sunday");
 
-const getUserData = (username) =>{
+const getUserInfo = (username) =>{
   return usersStore.users[username];
+}
+
+const getIDFromUrl = (url) =>{
+  return url.split('.')[1];
 }
 
 let lib = {};
@@ -26,33 +30,35 @@ lib.isTodoOfSameUser = (toDoList,toDoID) => {
   })
 }
 
-lib.getToDo = (user,toDoID) => {
-  let username = user.username;
-  let userInfo = getUserData(username);
+lib.getToDo = (req) => {
+  let username = req.user.username;
+  let toDoID = getIDFromUrl(req.url);
+  let userInfo = getUserInfo(username);
   if (lib.isTodoOfSameUser(userInfo.toDos,toDoID)) {
-    user.todoID = toDoID;
-    let toDo = usersStore.getUserTodo(username,user.todoID);
-    return lib.displayToDo(toDo);
+    let toDo = usersStore.getUserTodo(username,toDoID);
+    return lib.getTodoInHTML(toDo,toDoID);
   }
   return;
 }
 
 
-lib.deleteToDo = (username,toDoID) => {
+lib.deleteTodo = (req) => {
+  let username = req.user.username;
+  let toDoID = getIDFromUrl(req.url);
   usersStore.deleteTodoList(username,toDoID);
 }
 
 
 lib.getLinksOfTodos = (toDoList)=> {
   let toDos=toDoList.map(function(toDo){
-    return `<a href="${toDo.id}">${toDo.title}</a>`
+    return `<a href=viewTodo.${toDo.id}>${toDo.title}</a>`
   })
   return toDos.join("\n")
 }
 
 
 lib.getHomePage = (username) =>{
-  let userData = getUserData(username);
+  let userData = getUserInfo(username);
   let homePageFormat = lib.getHomePageFormat();
   let userToDos = lib.getLinksOfTodos(userData.toDos);
   let homeWithUserName = homePageFormat.replace("UserName",userData.username);
@@ -60,13 +66,21 @@ lib.getHomePage = (username) =>{
   return homeWithToDoLists;
 }
 
-lib.displayToDo = (userInfo)=>{
+lib.makeEditAndDeleteLinks = (toDoID) => {
+  let editLink = `<a href="/edit.${toDoID}"><button>Edit</button></a>`
+  let deleteLink = `<a href="/delete.${toDoID}"><button>Delete</button></a>`
+  return `${editLink}<br>${deleteLink}`;
+}
+
+lib.getTodoInHTML = (userInfo,toDoID)=>{
   let toDoFormat = lib.getToDoFormat();
+  let editAndDeleteLinks = lib.makeEditAndDeleteLinks(toDoID);
   let toDoItems = lib.getTodoItemsInHTML(userInfo.toDoItems);
   let toDoWithTitle = toDoFormat.replace("<titl>",userInfo.title);
   let toDoWithDes = toDoWithTitle.replace('<des>',userInfo.description);
   let toDoWithItem = toDoWithDes.replace('<item>',toDoItems);
-  return toDoWithItem;
+  let toDoPage =toDoWithItem.replace('editReplacer',editAndDeleteLinks);
+  return toDoPage;
 }
 
 lib.getTodoItemsInHTML = (toDoItems) =>{

@@ -140,22 +140,10 @@ describe('app',()=>{
     })
   })
 
-  describe('GET /delete',()=>{
-    it('should redirect the valid user to the home page',done=>{
-      request(app,{method:'GET',url:'/delete',headers:{'cookie':'sessionid=1234'}},res=>{
-        th.should_be_redirected_to(res,'/home');
-      })
-      done();
-    })
-    it('should redirect to login page if the user is invalid',done=>{
-      request(app,{method:'GET',url:'/delete',headers:{'cookie':'sessionid=4'}},res=>{
-        th.should_be_redirected_to(res,'/login');
-      })
-      done();
-    })
-    it('should redirect to login page if user is not logged in',done=>{
-      request(app,{method:'GET',url:'/delete'},res=>{
-        th.should_be_redirected_to(res,'/login');
+  describe('GET /viewTodo',()=>{
+    it('should serve the todo based on id given in url',done=>{
+      request(app,{url:'/viewTodo.0',user:{username:'ishusi'},headers:{'cookie':'sessionid=1234'}},res=>{
+        th.status_is_ok(res);
       })
       done();
     })
@@ -164,6 +152,23 @@ describe('app',()=>{
   describe('GET /edit',()=>{
     it('should redirect to login page if the user is invalid',done=>{
       request(app,{method:'GET',url:'/edit',headers:{'cookie':'sessionid=4'}},res=>{
+        th.should_be_redirected_to(res,'/login');
+      })
+      done();
+    })
+  })
+
+
+  describe('/delete',()=>{
+
+    it('should redirect the valid user to the home page',done=>{
+      request(app,{url:'/delete.0',user:{username:'ishusi'},headers:{'cookie':'sessionid=1234'}},res=>{
+        th.should_be_redirected_to(res,'/home');
+      })
+      done();
+    })
+    it('should redirect to login page if user is not logged in',done=>{
+      request(app,{url:'/delete.0'},res=>{
         th.should_be_redirected_to(res,'/login');
       })
       done();
@@ -186,7 +191,6 @@ describe('app',()=>{
     })
   })
 })
-
 
 
 

@@ -2,14 +2,14 @@ const fs = require('fs');
 const lib = require('./dataHandlers.js');
 let pageLib = {};
 
-pageLib.displayTodo = (req,res) =>{
-  let toDoPage = lib.getToDo(req.user,req.url.slice(1));
-  if (toDoPage == undefined) {
-    return;
+pageLib.serveTodo = (req,res) =>{
+  if(isStartswith(req.url,'/viewTodo.')){
+    let toDoPage = lib.getToDo(req);
+    if (toDoPage == undefined) return;
+    res.setHeader('Content-type','text/html');
+    res.write(toDoPage);
+    res.end();
   }
-  res.setHeader('Content-type','text/html');
-  res.write(toDoPage);
-  res.end();
   return;
 }
 
@@ -26,12 +26,21 @@ pageLib.handlePostNewTodo = (req,res) => {
   res.end();
 }
 
+const isStartswith = (url,action)=>{
+  return url.startsWith(action);
+}
+
 
 pageLib.deleteToDo = (req,res)=>{
-  let username = req.user.username;
-  let todoID = req.user.todoID;
-  lib.deleteToDo(username,todoID);
-  res.redirect('/home');
+  if (isStartswith(req.url,'/delete.')) {
+    if (!req.user) {
+      res.redirect('/login');
+      return;
+    }
+    lib.deleteTodo(req);
+    res.redirect('/home');
+  }
+  return;
 }
 
 pageLib.editToDo = (req,res)=>{

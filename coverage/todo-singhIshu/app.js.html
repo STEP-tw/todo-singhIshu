@@ -22,7 +22,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>72/72</span>
+        <span class='fraction'>73/73</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -37,7 +37,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>68/68</span>
+        <span class='fraction'>69/69</span>
       </div>
     </div>
   </div>
@@ -158,6 +158,8 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">75x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -181,22 +183,22 @@
 <span class="cline-any cline-yes">25x</span>
 <span class="cline-any cline-yes">25x</span>
 <span class="cline-any cline-yes">25x</span>
-<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">25x</span>
-<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-yes">22x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">14x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -232,28 +234,28 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">let fs = require('fs');
 const http = require('http');
 const WebApp = require('./webapp');
+const StaticFileHandler = require('./handlers/StaticFileHandler.js');
 const GetLoginHandler = require('./handlers/getLoginHandler.js');
 const lib = require('./handlers/pageHandlers.js');
+let fileHandler = new StaticFileHandler('./public',fs);
 let getLoginHandler = new GetLoginHandler(fs,'./public/login.html');
 let SessionHandler = require('./handlers/sessionHandler.js');
 let sessionHandler = new SessionHandler('./data/sessionData.json',fs);
@@ -288,14 +290,14 @@ let loadUser = (req,res)=&gt;{
   }
 };
 &nbsp;
-let displayToDo = (req,res) =&gt; {
+let serveTodo = (req,res) =&gt; {
   if (req.user) {
-    lib.displayTodo(req,res);
+    lib.serveTodo(req,res);
   }
 }
 &nbsp;
 let redirectUnloggedUserToLogin = (req,res)=&gt;{
-  if(req.urlIsOneOf(['/logout','/home','/toDoForm','/delete','/edit'])  &amp;&amp; !req.user) res.redirect('/login');
+  if(req.urlIsOneOf(['/logout','/home','/toDoForm','/edit'])  &amp;&amp; !req.user) res.redirect('/login');
 };
 &nbsp;
 let redirectLoggedInUserToHome = (req,res)=&gt;{
@@ -330,7 +332,8 @@ let handleLogout = (req,res)=&gt; {
 &nbsp;
 app.use(loadUser);
 app.use(logRequest);
-app.use(displayToDo);
+app.use(serveTodo);
+app.use(lib.deleteToDo);
 app.use(redirectUnloggedUserToLogin);
 app.use(redirectLoggedInUserToHome);
 app.get('/',(req,res)=&gt;{
@@ -346,10 +349,7 @@ app.get('/toDoForm',getTodoForm);
 app.get('/home',lib.handleHomePage);
 app.post('/toDoForm',lib.handlePostNewTodo);
 app.get('/logout',handleLogout);
-app.get('/delete',lib.deleteToDo);
-app.get('/edit',lib.editToDo);
-app.post('/edit',lib.getEdittedTodo);
-&nbsp;
+app.usePostProcess(fileHandler.getRequestHandler());
 &nbsp;
 module.exports = app;
 &nbsp;</pre></td></tr>
@@ -358,7 +358,7 @@ module.exports = app;
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Jan 22 2018 23:27:41 GMT+0530 (IST)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Jan 23 2018 12:04:19 GMT+0530 (IST)
 </div>
 </div>
 <script src="../prettify.js"></script>

@@ -39,14 +39,14 @@ let loadUser = (req,res)=>{
   }
 };
 
-let displayToDo = (req,res) => {
+let serveTodo = (req,res) => {
   if (req.user) {
-    lib.displayTodo(req,res);
+    lib.serveTodo(req,res);
   }
 }
 
 let redirectUnloggedUserToLogin = (req,res)=>{
-  if(req.urlIsOneOf(['/logout','/home','/toDoForm','/delete','/edit'])  && !req.user) res.redirect('/login');
+  if(req.urlIsOneOf(['/logout','/home','/toDoForm','/edit'])  && !req.user) res.redirect('/login');
 };
 
 let redirectLoggedInUserToHome = (req,res)=>{
@@ -81,7 +81,8 @@ let handleLogout = (req,res)=> {
 
 app.use(loadUser);
 app.use(logRequest);
-app.use(displayToDo);
+app.use(serveTodo);
+app.use(lib.deleteToDo);
 app.use(redirectUnloggedUserToLogin);
 app.use(redirectLoggedInUserToHome);
 app.get('/',(req,res)=>{
@@ -97,9 +98,6 @@ app.get('/toDoForm',getTodoForm);
 app.get('/home',lib.handleHomePage);
 app.post('/toDoForm',lib.handlePostNewTodo);
 app.get('/logout',handleLogout);
-app.get('/delete',lib.deleteToDo);
-app.get('/edit',lib.editToDo);
-app.post('/edit',lib.getEdittedTodo);
 app.usePostProcess(fileHandler.getRequestHandler());
 
 module.exports = app;
