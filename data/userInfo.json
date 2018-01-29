@@ -1,10 +1,46 @@
-[
-  {
-    "username": "ponu",
-    "name": "Prateek Kumar Singh"
-  },
-  {
-    "username": "ishusi",
-    "name": "Ishu Singh"
+{
+  "users": {
+    "ishusi": {
+      "username": "ishusi",
+      "counter": 1,
+      "toDos": [
+        {
+          "title": "vzcxv",
+          "id": 0,
+          "description": "zxcvzx",
+          "counter": 3,
+          "toDoItems": [
+            {
+              "itemText": "zxcvzxc",
+              "status": true,
+              "id": 0
+            },
+            {
+              "itemText": "vzxcv",
+              "status": false,
+              "id": 1
+            },
+            {
+              "itemText": "zxcv",
+              "status": true,
+              "id": 2
+            }
+          ]
+        }
+      ]
+    },
+    "dhanu": {
+      "username": "dhanu",
+      "counter": 0,
+      "toDos": [
+        {
+          "title": "asdfa",
+          "id": 1,
+          "description": "sdfafadf",
+          "counter": 0,
+          "toDoItems": []
+        }
+      ]
+    }
   }
-]
+}
