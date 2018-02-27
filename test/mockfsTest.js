@@ -23,13 +23,6 @@ describe('mockFs',()=>{
       assert.deepEqual(actual,expected);
       done();
     })
-    it('should return error message if file doesnt exist',done=>{
-      mockFs.writeFileSync('hello.txt','hello world');
-      let actual = mockFs.readFileSync('hii.txt','utf8');
-      let expected = 'file not found'
-      assert.equal(actual,expected);
-      done();
-    })
   })
   describe('existsSync()',()=>{
     it('should give the content file',done=>{

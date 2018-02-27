@@ -1,6 +1,12 @@
 const fs = require('fs');
+const UsersStore = require('../models/usersStore.js');
 
-const getUserInfo = (username,usersStore) =>{
+let usersStore = new UsersStore();
+usersStore.addUser('ishusi',0);
+usersStore.addUser('ponu',1);
+usersStore.addToDoForUser('ishusi',"sunday");
+
+const getUserInfo = (username) =>{
   return usersStore.users[username];
 }
 
@@ -24,15 +30,24 @@ lib.isTodoOfSameUser = (toDoList,toDoID) => {
   })
 }
 
-lib.getToDo = (req,usersStore) => {
+lib.getToDo = (req) => {
   let username = req.user.username;
   let toDoID = getIDFromUrl(req.url);
-  let userInfo = getUserInfo(username,usersStore);
+  let userInfo = getUserInfo(username);
   if (lib.isTodoOfSameUser(userInfo.toDos,toDoID)) {
     let toDo = usersStore.getUserTodo(username,toDoID);
     return lib.getTodoInHTML(toDo,toDoID);
   }
+  return;
 }
+
+
+lib.deleteTodo = (req) => {
+  let username = req.user.username;
+  let toDoID = getIDFromUrl(req.url);
+  usersStore.deleteTodoList(username,toDoID);
+}
+
 
 lib.getLinksOfTodos = (toDoList)=> {
   let toDos=toDoList.map(function(toDo){
@@ -42,8 +57,8 @@ lib.getLinksOfTodos = (toDoList)=> {
 }
 
 
-lib.getHomePage = (username,usersStore) =>{
-  let userData = getUserInfo(username,usersStore);
+lib.getHomePage = (username) =>{
+  let userData = getUserInfo(username);
   let homePageFormat = lib.getHomePageFormat();
   let userToDos = lib.getLinksOfTodos(userData.toDos);
   let homeWithUserName = homePageFormat.replace("UserName",userData.username);
@@ -51,18 +66,24 @@ lib.getHomePage = (username,usersStore) =>{
   return homeWithToDoLists;
 }
 
+<<<<<<< HEAD
 lib.getEditAndDeleteLinks = (toDoID) => {
   let editLink = `<a href="/edit/${toDoID}"><button>Edit</button></a>`
   let deleteLink = `<a href="/delete/:${toDoID}/"><button>Delete</button></a>`
+=======
+lib.makeEditAndDeleteLinks = (toDoID) => {
+  let editLink = `<a href="/edit.${toDoID}"><button>Edit</button></a>`
+  let deleteLink = `<a href="/delete.${toDoID}"><button>Delete</button></a>`
+>>>>>>> parent of c21ae83... App is using express framework and testing app by using supertest.
   return `${editLink}<br>${deleteLink}`;
 }
 
-lib.getTodoInHTML = (toDoInfo,toDoID)=>{
+lib.getTodoInHTML = (userInfo,toDoID)=>{
   let toDoFormat = lib.getToDoFormat();
-  let editAndDeleteLinks = lib.getEditAndDeleteLinks(toDoID);
-  let toDoItems = lib.getTodoItemsInHTML(toDoInfo.toDoItems);
-  let toDoWithTitle = toDoFormat.replace("<titl>",toDoInfo.title);
-  let toDoWithDes = toDoWithTitle.replace('<des>',toDoInfo.description);
+  let editAndDeleteLinks = lib.makeEditAndDeleteLinks(toDoID);
+  let toDoItems = lib.getTodoItemsInHTML(userInfo.toDoItems);
+  let toDoWithTitle = toDoFormat.replace("<titl>",userInfo.title);
+  let toDoWithDes = toDoWithTitle.replace('<des>',userInfo.description);
   let toDoWithItem = toDoWithDes.replace('<item>',toDoItems);
   let toDoPage =toDoWithItem.replace('editReplacer',editAndDeleteLinks);
   return toDoPage;
@@ -70,34 +91,45 @@ lib.getTodoInHTML = (toDoInfo,toDoID)=>{
 
 lib.getTodoItemsInHTML = (toDoItems) =>{
   let items=toDoItems.map(function(toDoItem){
-    return `<br>${toDoItem.itemText} is ${toDoItem.status}<br>`
+    return `<br>${toDoItem.itemText}<br>`
   })
   return items.join("\n")
 }
 
 
-lib.storeTodoItems = (username,toDoContents,todoID,usersStore)=> {
+lib.storeTodoItems = (username,toDoContents,todoID)=> {
   let toDoItems = [];
   let attributesOfToDo = Object.keys(toDoContents);
   for (var attribute in toDoContents) {
     if (attribute.startsWith('item')) {
       let itemText = toDoContents[attribute];
-      let toDoItem =usersStore.addNewToDoItem(username,todoID,itemText);;
+      let toDoItem =usersStore.addNewToDoItem(username,todoID,itemText);
       let itemID = attribute.slice(4);
       if (attributesOfToDo.includes(itemID)) {
         usersStore.markItemDone(username,todoID,toDoItem.id);
+        return;
       }
     }
   }
   return toDoItems;
 }
 
-lib.storeNewTodo = (username,toDoData,userStore) =>{
-  let toDo = userStore.addToDoForUser(username,toDoData.title,toDoData.description);
-  lib.storeTodoItems(username,toDoData,toDo.id,userStore);
-  userStore.storeUsers();
+lib.storeNewTodo = (username,toDoData) =>{
+  let toDo = usersStore.addToDoForUser(username,toDoData.title,toDoData.description);
+  lib.storeTodoItems(username,toDoData,toDo.id);
 }
 
+lib.replaceValue = (replacewith,name,content) =>{
+  return content.replace(`<input type="text" name="${name}" value="">`,
+  `<input type="text" name="${name}" value="${replacewith}">`);
+}
+
+lib.getEditForm = (username,toDoID) =>{
+  let editForm = fs.readFileSync('./public/toDoForm.html','utf8');
+  let todo = usersStore.getUserTodo(username,toDoID);
+  editForm = lib.replaceValue(todo.title,'title',editForm);
+  return lib.replaceValue(todo.description,'description',editForm);
+}
 
 
 

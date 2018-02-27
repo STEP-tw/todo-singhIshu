@@ -10,23 +10,19 @@ class ToDo {
   editTitle(newTitle){
     this.title = newTitle;
   }
-
   editDescription(newDescription){
     this.description = newDescription;
   }
-
-  addToDoItem(title,status,id=this.counter++){
-    let newToDoItem = new ToDoItem(title,id,status);
+  addToDoItem(title,status){
+    let newToDoItem = new ToDoItem(title,this.counter++,status);
     this.toDoItems.push(newToDoItem);
     return newToDoItem;
   }
-
   getToDoItem(toDoItemID){
     return this.toDoItems.find((item)=>{
       return toDoItemID == item.id;
     })
   }
-
   deleteToDoItem(toDoItemID){
     let toDoItem = this.getToDoItem(toDoItemID);
     let indexOfToDoItem = this.toDoItems.indexOf(toDoItem);

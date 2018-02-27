@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
   "users": {
     "ishusi": {
@@ -61,5 +62,15 @@
         }
       ]
     }
+=======
+[
+  {
+    "username": "ponu",
+    "name": "Prateek Kumar Singh"
+  },
+  {
+    "username": "ishusi",
+    "name": "Ishu Singh"
+>>>>>>> parent of c21ae83... App is using express framework and testing app by using supertest.
   }
-}
+]

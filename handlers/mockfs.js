@@ -2,9 +2,9 @@ class MockFs {
   constructor() {
     this.files = {};
   }
-  readFileSync(filePath,encoding){
+  readFileSync(filePath){
     if (!this.existsSync(filePath))
-      return 'file not found';
+      throw Error;
     return this.files[filePath];
   }
   writeFileSync(filePath,contents){

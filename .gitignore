@@ -1,9 +1,9 @@
 node_modules/
 *.log
 .DS_Store
+.userDataBase.json
 .toDo.txt
 .loginTest.js
 ./coverage
 ./.nyc_output
 ./data/sessionData.json
-./data/userInfo.json

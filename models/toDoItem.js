@@ -1,7 +1,7 @@
 class ToDoItem {
-  constructor(itemText,id,status=false) {
+  constructor(itemText,id) {
     this.itemText = itemText;
-    this.status = status;
+    this.status = false;
     this.id = id;
   }
   edit(newTitle){

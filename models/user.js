@@ -1,17 +1,17 @@
 const ToDo = require('./toDo.js');
 class User {
-  constructor(username) {
+  constructor(username,id) {
     this.username = username;
+    this.id = id;
     this.counter = 0;
     this.toDos =[];
   }
-  addToDo(title,description,id=this.counter++){
-    let newToDo = new ToDo(title,id,description);
+  addToDo(title,description){
+    let newToDo = new ToDo(title,this.counter++,description);
     this.toDos.push(newToDo);
     return newToDo;
   }
   getToDo(toDoID){
-
     return this.toDos.find((toDo)=>{
       return toDo.id == toDoID;
     })
@@ -38,10 +38,9 @@ class User {
     let toDo = this.getToDo(toDoID);
     toDo.description = newDescrip;
   }
-
-  addItemInToDo(toDoID,itemText,status,itemID){
+  addItemInToDo(toDoID,title){
     let toDo = this.getToDo(toDoID);
-    return toDo.addToDoItem(itemText,status,itemID);
+    return toDo.addToDoItem(title);
   }
   deleteItemInToDo(toDoID,toDoItemID){
     let toDo = this.getToDo(toDoID);

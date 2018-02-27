@@ -21,20 +21,3 @@
 Take the list of the database and then filter the objects that are having the same username
 take the userList and map out the titles and you will get the list of all the titles.
 when the user will go t
-
-//==============
-
-
-1.clean storeTodoItems function
-
-lib.replaceValue = (replacewith,name,content) =>{
-  return content.replace(`<input type="text" name="${name}" value="">`,
-  `<input type="text" name="${name}" value="${replacewith}">`);
-}
-
-lib.getEditForm = (username,toDoID) =>{
-  let editForm = fs.readFileSync('./public/toDoForm.html','utf8');
-  let todo = usersStore.getUserTodo(username,toDoID);
-  editForm = lib.replaceValue(todo.title,'title',editForm);
-  return lib.replaceValue(todo.description,'description',editForm);
-}

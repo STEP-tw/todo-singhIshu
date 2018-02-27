@@ -1,27 +1,27 @@
-const fs = require('fs');
+let fs = require('fs');
 const http = require('http');
-const express = require('express');
-const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
-const path = require('path');
-
+const WebApp = require('./webapp');
+const StaticFileHandler = require('./handlers/StaticFileHandler.js');
+const GetLoginHandler = require('./handlers/getLoginHandler.js');
 const lib = require('./handlers/pageHandlers.js');
-const SessionHandler = require(path.resolve('handlers/sessionHandler.js'));
-const UsersStore = require(path.resolve('models/usersStore.js'));
-
+let fileHandler = new StaticFileHandler('./public',fs);
+let getLoginHandler = new GetLoginHandler(fs,'./public/login.html');
+let SessionHandler = require('./handlers/sessionHandler.js');
 let sessionHandler = new SessionHandler('./data/sessionData.json',fs);
-let usersStore = new UsersStore('./data/userInfo.json',fs);
-let usersInfo = JSON.parse(fs.readFileSync('./data/userInfo.json','utf8'));
-let users = Object.keys(usersInfo.users);
-let app = express();
+let users = JSON.parse(fs.readFileSync('./data/userInfo.json','utf8'));
+let app = WebApp.create();
 app.sessionHandler = sessionHandler;
 app.sessionHandler.loadSessions();
-app.usersStore  = usersStore;
-app.usersStore.loadUsers();
 
 let toS = o=>JSON.stringify(o,null,2);
 
-let logRequest = (req,res,next)=>{
+const processGetLogin= function(req,res) {
+  let loginPageContents = fs.readFileSync('./public/login.html','utf8');
+  let getLoginHandler = new GetLoginHandler(loginPageContents);
+  return getLoginHandler.getRequestHandler();
+}
+
+let logRequest = (req,res)=>{
   let text = ['--------------------------',
     `${req.method} ${req.url}`,
     `HEADERS=> ${toS(req.headers)}`,
@@ -29,66 +29,46 @@ let logRequest = (req,res,next)=>{
     `BODY=> ${toS(req.body)}`,''].join('\n');
     console.log(req.url);
   fs.appendFile('request.log',text,()=>{});
-  next();
 };
 
-let loadUser = (req,res,next)=>{
+let loadUser = (req,res)=>{
   let sessionid = req.cookies.sessionid;
   let username = app.sessionHandler.getUserBySessionID(sessionid);
   if (sessionid && username) {
     req.user = {username:username};
   }
-  next();
 };
 
-let serveTodo = (req,res,next) => {
+let serveTodo = (req,res) => {
   if (req.user) {
-    lib.serveTodo(req,res,app.usersStore);
+    lib.serveTodo(req,res);
   }
-  next();
 }
 
-let redirectUnloggedUserToLogin = (req,res,next)=>{
-  if(['/logout','/home','/toDoForm'].includes(req.url)  && !req.user) {
-    res.redirect('/login');
-    return;
-  }
-  next();
+let redirectUnloggedUserToLogin = (req,res)=>{
+  if(req.urlIsOneOf(['/logout','/home','/toDoForm','/edit'])  && !req.user) res.redirect('/login');
 };
 
-let redirectLoggedInUserToHome = (req,res,next)=>{
-  if(['/login'].includes(req.url) && req.user){
-    res.redirect('/home')
-    return;
-  }
-  next();
+let redirectLoggedInUserToHome = (req,res)=>{
+  if(req.urlIsOneOf(['/login']) && req.user) res.redirect('/home');
 };
 
 let getTodoForm = (req,res)=>{
-  res.setHeader('Content-Type','text/html');
+  res.setHeader('Content-type','text/html');
   res.write(fs.readFileSync('./public/toDoForm.html'));
   res.end();
 }
 
-const processGetLogin = (req,res)=>{
-  let message = req.cookies.message ;
-  let content = fs.readFileSync('./public/login.html','utf8');
-  res.setHeader('content-type','text/html');
-  let loginPageContents = content.replace("<h2></h2>",message|| "");
-  res.write(loginPageContents);
-  res.end();
-}
-
-const processPostLogin =(req,res)=>{
-  let isUser = users.includes(req.body.username);
-  if(!isUser) {
+let processPostLogin =(req,res)=>{
+  let user = users.find(u=>u.username==req.body.username);
+  if(!user) {
     res.setHeader('Set-Cookie','message=login failed; Max-Age=5');
     res.redirect("/login");
     return;
   }
   let sessionid = new Date().getTime();
   res.setHeader('Set-Cookie',`sessionid=${sessionid}`);
-  app.sessionHandler.addSession(sessionid,req.body.username);
+  app.sessionHandler.addSession(sessionid,user.username);
   res.redirect('/home');
 }
 
@@ -98,43 +78,31 @@ let handleLogout = (req,res)=> {
   res.redirect('/login');
 }
 
-let changeUrlToLogin = (req,res,next) =>{
-  req.url = '/login';
-  next();
-}
 
-const deleteTodo = (req,res,next)=>{
-  lib.deleteToDo(req,res,app.usersStore);
-  next();
-}
-
-const handleHomePage = (req,res)=>{
-  lib.handleHomePage(req,res,app.usersStore);
-}
-
-const handlePostNewTodo =(req,res)=>{
-  lib.handlePostNewTodo(req,res,app.usersStore);
-  return;
-}
-app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: true }))
 app.use(loadUser);
 app.use(logRequest);
 app.use(express.static('public'));
 app.use(serveTodo);
-app.use(deleteTodo);
+app.use(lib.deleteToDo);
 app.use(redirectUnloggedUserToLogin);
 app.use(redirectLoggedInUserToHome);
+<<<<<<< HEAD
 // app.get('/',changeUrlToLogin);
+=======
+app.get('/',(req,res)=>{
+  res.redirect('/login');
+});
+>>>>>>> parent of c21ae83... App is using express framework and testing app by using supertest.
 
-app.get('/login',processGetLogin);
+app.get('/login',processGetLogin());
 
 app.post('/login',processPostLogin);
 
 app.get('/toDoForm',getTodoForm);
 
-app.get('/home',handleHomePage);
-app.post('/toDoForm',handlePostNewTodo);
+app.get('/home',lib.handleHomePage);
+app.post('/toDoForm',lib.handlePostNewTodo);
 app.get('/logout',handleLogout);
+app.usePostProcess(fileHandler.getRequestHandler());
 
 module.exports = app;

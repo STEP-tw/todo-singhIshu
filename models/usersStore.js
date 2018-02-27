@@ -1,45 +1,18 @@
 const User = require('./user.js');
 class UsersStore {
-  constructor(storagePath,fs) {
-    this.fs = fs;
-    this.storagePath = storagePath;
+  constructor() {
     this.users ={};
   }
-  addUser(user){
-    return this.users[user.username] = user;
+  addUser(username,sessionid){
+    this.users[username] = new User(username,sessionid);
   }
-  loadUsers(){
-    let self = this;
-    let usersInfo = this.fs.readFileSync(this.storagePath,'utf8');
-    usersInfo = JSON.parse(usersInfo);
-    let appUsers = Object.keys(usersInfo.users);
-    appUsers.forEach(function(user){
-      let newUser = new User(user);
-      let todoList = usersInfo.users[user].toDos;
-      todoList.forEach(function (todo) {
-        newUser.addToDo(todo.title,todo.description,todo.id);
-        todo.toDoItems.forEach(function(item){
-          newUser.addItemInToDo(todo.id,item.itemText,item.status,item.id);
-        })
-      })
-      self.addUser(newUser);
-    })
-  }
-
-  storeUsers(){
-    let usersInfo = JSON.stringify({"users":this.users},null,2);
-    this.fs.writeFileSync(this.storagePath,usersInfo);
-    return ;
-  }
-
   getUser(username){
     return this.users[username];
   }
   addToDoForUser(username,title,description){
-    let user = this.getUser(username);
+    let user = this.users[username];
     return user.addToDo(title,description);
   }
-  // usersStore.getUserTodo(username,toDoID)
   getUserTodo(username,toDoID){
     let user = this.users[username];
     return user.getToDo(toDoID);
