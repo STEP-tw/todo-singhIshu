@@ -125,7 +125,7 @@ app.use(serveTodo);
 app.use(deleteTodo);
 app.use(redirectUnloggedUserToLogin);
 app.use(redirectLoggedInUserToHome);
-app.get('/',changeUrlToLogin);
+// app.get('/',changeUrlToLogin);
 
 app.get('/login',processGetLogin);
 
