@@ -2,13 +2,13 @@
   "users": {
     "ishusi": {
       "username": "ishusi",
-      "counter": 1,
+      "counter": 2,
       "toDos": [
         {
           "title": "vzcxv",
           "id": 0,
           "description": "zxcvzx",
-          "counter": 3,
+          "counter": 1,
           "toDoItems": [
             {
               "itemText": "zxcvzxc",
@@ -24,8 +24,27 @@
               "itemText": "zxcv",
               "status": true,
               "id": 2
+            },
+            {
+              "itemText": "lmdsa",
+              "status": false,
+              "id": 0
             }
           ]
+        },
+        {
+          "title": "sdlm",
+          "id": 0,
+          "description": "wdlmas",
+          "counter": 0,
+          "toDoItems": []
+        },
+        {
+          "title": "mldwa`",
+          "id": 1,
+          "description": "kmdsa",
+          "counter": 0,
+          "toDoItems": []
         }
       ]
     },

@@ -52,8 +52,8 @@ lib.getHomePage = (username,usersStore) =>{
 }
 
 lib.getEditAndDeleteLinks = (toDoID) => {
-  let editLink = `<a href="/edit.${toDoID}"><button>Edit</button></a>`
-  let deleteLink = `<a href="/delete.${toDoID}"><button>Delete</button></a>`
+  let editLink = `<a href="/edit/${toDoID}"><button>Edit</button></a>`
+  let deleteLink = `<a href="/delete/:${toDoID}/"><button>Delete</button></a>`
   return `${editLink}<br>${deleteLink}`;
 }
 

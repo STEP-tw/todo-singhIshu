@@ -2,7 +2,6 @@ let chai = require('chai');
 let assert = chai.assert;
 let request = require('supertest');
 let app = require('../app.js');
-let th = require('./testHelper.js');
 let MockFs = require('../handlers/mockfs.js');
 let mockfs = new MockFs();
 let redirectToLogin = require('../app.js').redirectToLogin;
@@ -66,7 +65,7 @@ describe('app',()=>{
     it('serves the login.html file',done=>{
       request(app,'/login.html')
       .get('/login.html')
-      .expect(404)
+      .expect(200)
       .end(done)
     })
   })
@@ -76,6 +75,7 @@ describe('app',()=>{
         request(app,'/')
         .get('/')
         .expect(200)
+        .expect(/Login/)
         .end(done)
       })
     })
@@ -95,7 +95,7 @@ describe('app',()=>{
       request(app,'/login')
       .get('/login')
       .expect(200)
-      .expect(/Name:/)
+      .expect(/Login/)
       .expect((res)=>{
         assert.isNotOk(res.text.includes('login failed'))
       })
@@ -253,7 +253,7 @@ describe('app',()=>{
        request(app,'/login')
        .get('/login')
        .expect(200)
-       .expect(/Name:/)
+       .expect(/Login/)
        .expect((res)=>{
          assert.isNotOk(res.text.includes('login failed'))
        })
@@ -274,7 +274,7 @@ describe('app',()=>{
        .get('/login')
        .set('cookie','message=login failed')
        .expect(200)
-       .expect(/Name:/)
+       .expect(/Login/)
        .expect(/login failed/)
        .expect(doesNotHaveCookie)
        .end(done)
@@ -285,7 +285,7 @@ describe('app',()=>{
 
   describe('/delete',()=>{
     it('should redirect the valid user to the home page',done=>{
-      request(app,'/delete.0')
+      request(app,'/delete/.0')
       .get('/delete.0')
       .set('cookie','sessionid=1234')
       .expect(302)

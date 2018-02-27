@@ -1,7 +1,5 @@
 let chai = require('chai');
 let assert = chai.assert;
-let request = require('./requestSimulator.js');
-let th = require('./testHelper.js');
 const MockFs = require('../handlers/mockfs.js');
 let SessionHandler = require('../handlers/sessionHandler.js');
 

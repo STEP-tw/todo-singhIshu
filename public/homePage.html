@@ -2,12 +2,19 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="/css/home.css">
   </head>
   <body>
-    <h1>UserName</h1>
-    <h2>toDoMade</h2>
-    <h2>Click here to make new toDo</h2>
-    <a href="/toDoForm"><button>New ToDo</button></a>
-    <a href="/logout"><button>Logout</button></a>
+    <header>
+      <a href="/logout" id="logout"><button>Logout</button></a>
+      <h1 id="title">UserName</h1>
+    </header>
+    <div class="column">
+      <img src="./images/create.png">
+      <a href="/toDoForm"><button>New ToDo</button></a>
+    </div>
+    <div class="column">
+      <h2>toDoMade</h2>
+    </div>
   </body>
 </html>

@@ -36,7 +36,7 @@ const getIDFromUrl = (url) =>{
 
 
 pageLib.deleteToDo = (req,res,usersStore)=>{
-  if (isStartswith(req.url,'/delete.')) {
+  if (isStartswith(req.url,'/delete/:id')) {
     if (!req.user) {
       res.redirect('/login');
       return;

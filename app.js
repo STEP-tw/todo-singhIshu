@@ -120,6 +120,7 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(loadUser);
 app.use(logRequest);
+app.use(express.static('public'));
 app.use(serveTodo);
 app.use(deleteTodo);
 app.use(redirectUnloggedUserToLogin);

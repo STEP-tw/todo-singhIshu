@@ -1,0 +1,67 @@
+body {
+  background-image: url('../images/login.jpg');
+  min-height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+ h1,h2, h3, h4, h5, h6 {
+  font-family: 'Roboto Slab', serif;
+  font-weight: 300;
+  font-size: 40px;
+}
+
+#title{
+  margin-left: 720px;
+  margin-top: 20px;
+  text-align: right;
+}
+img{
+  width: 600px;
+  height: 500px;
+  margin-left: 200px;
+}
+
+header {
+  color: #FFF;
+  padding:5px;
+  color: white;
+  text-align: left;
+  background-size: cover;
+  background-color:#232060 ;
+  margin: 0px;
+}
+
+
+header h1#title {
+  font-weight: 600;
+  text-align: center;
+  margin-top: 40px;
+  font-size: 40px;
+  text-transform: uppercase;
+}
+
+#logout{
+  float: right;
+  font-size: 50px;
+}
+
+button{
+  font-size: 20px;
+  width: 200px;
+  height: 50px;
+  margin-left:120px;
+  background-color: #232060 ;
+  color: #FFF;
+}
+
+.column {
+  float: left;
+  padding: 10px 10px;
+  width:45%;
+  height:50%;
+  font-size: 18px;
+  font-family: serif;
+  text-align: center;
+}

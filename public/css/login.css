@@ -1,0 +1,173 @@
+body {
+  background-image: url('../images/login.jpg');
+  min-height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Roboto Slab', serif;
+  font-weight: 300;
+  font-size: 30px;
+}
+
+img{
+  width: 500px;
+  height: 550px;
+  margin-left: 200px;
+}
+
+header {
+  color: #FFF;
+  padding: 30px 40px;
+  color: white;
+  text-align: center;
+  background-size: cover;
+  background-color:#232060 ;
+  margin: 0px;
+}
+
+header h1#title {
+  font-weight: 600;
+  text-align: center;
+  margin-top: 40px;
+  font-size: 54px;
+  text-transform: uppercase;
+}
+
+form {
+  border-radius: 44px 44px 44px 44px;
+  border: 0px solid #000000;
+  background: #232060;
+  width: 400px;
+  height: 350px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  left: 1000px;
+  bottom: 0;
+  margin: auto;
+  padding: 20px;
+  box-sizing: border-box;
+  box-shadow: 0px 0px 20px 5px rgba(0,0,0,0.2);
+}
+
+form h2 {
+  margin: 0 0 20px;
+  display: none;
+}
+
+form input:not([type="submit"]) {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 18px;
+  padding: 5px 0;
+  margin: 5px 0 0;
+  appearance: none;
+  -webkit-appearance: none;
+  outline: 0;
+  border: none;
+  border-bottom: 1px solid #CCC;
+}
+
+form input:not([type="submit"]):hover {
+  border-bottom: 1px solid #999;
+}
+
+form input:not([type="submit"]):focus {
+  border-bottom: 1px solid #3790A6;
+}
+
+
+form .form-input {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+form .form-input label {
+  margin: 6px 0;
+  font-weight: 100;
+  color: #999;
+}
+
+form input[type="submit"] {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 18px;
+  background: #3790A6;
+  color: #FFF;
+  padding: 10px 10px;
+  width: 100%;
+  border: none;
+  margin-top: 10px;
+}
+ol {
+  margin-left: 520px;
+  margin-top: 20px;
+  width: 500px;
+}
+
+ol li {
+  cursor: pointer;
+  position: relative;
+  padding: 12px 8px 12px 40px;
+  background: #eee;
+  font-size: 18px;
+}
+
+ol li:nth-child(odd) {
+  background: #f9f9f9;
+}
+
+ol li:hover {
+  background: #ddd;
+}
+
+.close {
+  color: black;
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 12px 16px 12px 16px;
+}
+
+.close:hover {
+  background-color: #006699;
+}
+
+.header {
+  padding: 30px 40px;
+  color: white;
+  text-align: center;
+}
+
+.header:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+#LinkTohome{
+  position: fixed;
+  margin-top: 18px;
+  height: 60px;
+  width: 90px;
+}
+
+#LinkToLogout{
+  margin-left: 1400px;
+  position: fixed;
+  margin-top: 18px;
+  height: 60px;
+  width: 90px;
+}
+#title{
+  margin-left: 720px;
+  margin-top: 20px;
+}
+#user {
+  position: fixed;
+  margin-top: 0%;
+  color: snow;
+  margin-left: 1400px;
+}
