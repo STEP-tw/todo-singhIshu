@@ -7,7 +7,10 @@ class SessionHandler {
     this.fs =fs;
   }
   loadSessions(){
-    let  sessions = this.fs.readFileSync(this.storagePath,'utf8');
+    let  sessions = '{}';
+    if(this.fs.existsSync(this.storagePath)){
+       sessions = this.fs.readFileSync(this.storagePath,'utf8');
+    }
     this.sessions = JSON.parse(sessions);
   }
   storeSessions(){
