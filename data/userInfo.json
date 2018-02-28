@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 {
   "users": {
     "ishusi": {
@@ -6,46 +5,27 @@
       "counter": 2,
       "toDos": [
         {
-          "title": "vzcxv",
+          "title": "New Pairing",
           "id": 0,
-          "description": "zxcvzx",
-          "counter": 1,
+          "description": "Testing",
+          "counter": 3,
           "toDoItems": [
             {
-              "itemText": "zxcvzxc",
-              "status": true,
+              "itemText": "First",
+              "status": false,
               "id": 0
             },
             {
-              "itemText": "vzxcv",
+              "itemText": "Day",
               "status": false,
               "id": 1
             },
             {
-              "itemText": "zxcv",
-              "status": true,
-              "id": 2
-            },
-            {
-              "itemText": "lmdsa",
+              "itemText": "Of Pairing",
               "status": false,
-              "id": 0
+              "id": 2
             }
           ]
-        },
-        {
-          "title": "sdlm",
-          "id": 0,
-          "description": "wdlmas",
-          "counter": 0,
-          "toDoItems": []
-        },
-        {
-          "title": "mldwa`",
-          "id": 1,
-          "description": "kmdsa",
-          "counter": 0,
-          "toDoItems": []
         }
       ]
     },
@@ -62,15 +42,5 @@
         }
       ]
     }
-=======
-[
-  {
-    "username": "ponu",
-    "name": "Prateek Kumar Singh"
-  },
-  {
-    "username": "ishusi",
-    "name": "Ishu Singh"
->>>>>>> parent of c21ae83... App is using express framework and testing app by using supertest.
   }
-]
+}

@@ -4,6 +4,8 @@ let ToDoItem = require('../models/toDoItem.js');
 
 describe('ToDoItem',()=>{
   describe('new ToDoItem()',()=>{
+    let toDoItem = {};
+  
     it('tests that the ToDoItem has the itemText and status or not',()=>{
       let expected = {itemText:"go to shower",id:1,status:false}
       let toDoItem = new ToDoItem("go to shower",1);

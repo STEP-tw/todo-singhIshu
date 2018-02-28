@@ -6,20 +6,13 @@
   "directories": {
     "test": "test"
   },
-  "dependencies": {
-    "colorpicker": "^2.0.0",
-    "cookie-parser": "^1.4.3",
-    "express": "^4.16.2"
-  },
+  "dependencies": {},
   "devDependencies": {
     "chai": "^4.1.2",
-<<<<<<< HEAD
+    "cookie-parser": "^1.4.3",
+    "express": "^4.16.2",
     "mocha": "^5.0.0",
-    "istanbul": "^0.4.5",
     "supertest": "^3.0.0"
-=======
-    "mocha": "^5.0.0"
->>>>>>> parent of c21ae83... App is using express framework and testing app by using supertest.
   },
   "scripts": {
     "test": "mocha",

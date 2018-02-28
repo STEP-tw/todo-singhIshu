@@ -5,7 +5,7 @@ let User = require('../models/user.js');
 describe('User',()=>{
   describe('new User()',()=>{
     it('tests if the user has username and id or not',()=>{
-      let expected = {username:'Ishu',id:1,counter:0,toDos:[]};
+      let expected = {username:'Ishu',counter:0,toDos:[]};
       let ishu = new User("Ishu",1);
       assert.deepEqual(expected,ishu);
     })
